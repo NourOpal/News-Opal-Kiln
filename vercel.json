@@ -1,15 +1,15 @@
 {
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/",
       "headers": [
         { "key": "Cache-Control", "value": "no-store, must-revalidate" }
       ]
     },
     {
-      "source": "/(.*\\.(jpg|jpeg|png|webp|mp4|webm))",
+      "source": "/index.html",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=300" }
+        { "key": "Cache-Control", "value": "no-store, must-revalidate" }
       ]
     }
   ]
