@@ -282,6 +282,123 @@
   .stat-strip .lab { color: var(--muted); }
   @media (max-width: 700px) { .stat-strip { grid-template-columns: repeat(2, 1fr); } }
 
+  /* BEATS */
+  .beats-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  @media (max-width: 880px) { .beats-wrap { grid-template-columns: 1fr; } }
+  .beats-col {
+    background: rgba(10,10,10,0.025);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .beats-algo { background: rgba(10,10,10,0.05); }
+  .beats-head {
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .beats-head span { color: var(--muted); text-transform: none; letter-spacing: 0; }
+  .beats-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .beat {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 14px;
+    align-items: baseline;
+  }
+  .beat-num { color: var(--muted); padding-top: 2px; }
+  .beat-text { font-size: 14px; line-height: 1.4; }
+
+  /* MOOD FRAME */
+  .mood-frame {
+    display: block;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1);
+  }
+  .mood-frame:hover { transform: translateY(-3px); }
+  .mood-frame img { width: 100%; height: auto; display: block; }
+  .mood-overlay {
+    position: absolute;
+    bottom: 16px; right: 16px;
+    background: rgba(10,10,10,0.92);
+    color: var(--bg);
+    padding: 8px 14px;
+    border-radius: 999px;
+  }
+
+  /* RESOURCES */
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  @media (max-width: 880px) { .resources-grid { grid-template-columns: 1fr; } }
+  .resource {
+    display: block;
+    padding: 22px;
+    background: rgba(10,10,10,0.025);
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .resource:hover { background: rgba(10,10,10,0.06); }
+  .resource-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .resource-name { font-size: 17px; font-weight: 500; letter-spacing: -0.01em; }
+  .resource-url { color: var(--muted); font-size: 12px; }
+  .resource-blurb { font-size: 13.5px; line-height: 1.5; color: #444; }
+  .resource-img {
+    margin-top: 14px;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #e8e6df;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .resource-img img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* PART DIVIDER */
+  .part-divider {
+    padding: 80px 0 40px;
+    margin: 32px 0 0;
+    border-top: 2px solid var(--ink);
+    background: var(--ink);
+    color: var(--bg);
+    margin-left: -1000px;
+    margin-right: -1000px;
+    padding-left: 1000px;
+    padding-right: 1000px;
+  }
+  .part-num {
+    color: rgba(244,243,239,0.6);
+    margin-bottom: 16px;
+    font-size: 12px;
+  }
+  .part-title {
+    font-weight: 500;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 16px;
+    color: var(--bg);
+  }
+  .part-sub {
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 640px;
+    color: rgba(244,243,239,0.7);
+  }
+
   /* FOOTER */
   footer {
     padding: 48px 0 64px;
@@ -314,11 +431,16 @@
   <p class="hero-sub">A reference hub. The bad sides of AI, algorithms, social media, attention, self-image and isolation in spring 2026 — court testimony, jury verdicts, viral posts, clinical case studies, lawsuits. Click any tile to read the source.</p>
 
   <nav class="indexnav mono">
-    <a href="#refs"><span class="num">00</span><span>Reference gallery</span></a>
+    <a href="#part-one" style="background:var(--ink);color:var(--bg);font-weight:500"><span>Part I — Brief + References</span></a>
+    <a href="#part-two" style="background:var(--ink);color:var(--bg);font-weight:500"><span>Part II — Press research</span></a>
+    <a href="#notes"><span class="num">A</span><span>Director's notes</span></a>
+    <a href="#mood"><span class="num">B</span><span>Mood reference</span></a>
+    <a href="#refs"><span class="num">C</span><span>Reference library</span></a>
+    <a href="#resources"><span class="num">D</span><span>Resources</span></a>
     <a href="#s01"><span class="num">01</span><span>Social media on trial</span></a>
     <a href="#s02"><span class="num">02</span><span>Children lost</span></a>
-    <a href="#s03"><span class="num">03</span><span>The algorithm + the body</span></a>
-    <a href="#s04"><span class="num">04</span><span>Grok / non-consensual AI</span></a>
+    <a href="#s03"><span class="num">03</span><span>Algorithm + body</span></a>
+    <a href="#s04"><span class="num">04</span><span>Grok</span></a>
     <a href="#s05"><span class="num">05</span><span>AI psychosis</span></a>
     <a href="#s06"><span class="num">06</span><span>Anti-AI violence</span></a>
     <a href="#s07"><span class="num">07</span><span>Claude collapse</span></a>
@@ -326,10 +448,82 @@
     <a href="#s09"><span class="num">09</span><span>Brain rot</span></a>
     <a href="#s10"><span class="num">10</span><span>Phone addiction</span></a>
     <a href="#s11"><span class="num">11</span><span>Doomscrolling</span></a>
-    <a href="#s12"><span class="num">12</span><span>Loneliness + AI companions</span></a>
+    <a href="#s12"><span class="num">12</span><span>Loneliness</span></a>
     <a href="#s13"><span class="num">13</span><span>Today / Atomic Age</span></a>
     <a href="#s14"><span class="num">14</span><span>Counter-aesthetic</span></a>
   </nav>
+</section>
+
+<!-- ============================== -->
+<!-- PART I — BRIEF + REFERENCES -->
+<!-- ============================== -->
+<section class="part-divider" id="part-one">
+  <div class="part-num mono">Part I</div>
+  <h2 class="part-title">The brief + the references.</h2>
+  <p class="part-sub">The vision, the mood board, the saved videos, and the places to source more. This is what the film should feel like.</p>
+</section>
+
+<!-- A — DIRECTOR'S NOTES -->
+<section class="sec" id="notes">
+  <div class="sec-bar">
+    <span class="sec-label mono">A / Director's notes</span>
+    <span class="sec-count mono">Two halves of the film</span>
+  </div>
+  <h2 class="sec-title">The vision: two worlds the film moves between.</h2>
+  <p class="sec-blurb">The brand film holds two halves in tension. The <strong>WORLD</strong> half is what we want to protect — slow, embodied, mysterious, full of love. The <strong>ALGO</strong> half is what's eroding it — speed, sameness, surveillance, consumption. The ending unifies the two. Below: the beats I want in each.</p>
+
+  <div class="beats-wrap">
+    <div class="beats-col beats-world">
+      <div class="beats-head mono">World <span>— what we want to protect</span></div>
+      <ul class="beats-list">
+        <li class="beat"><span class="beat-num mono">W01</span><span class="beat-text">"I love you"s on text — closing beat of the world half</span></li>
+        <li class="beat"><span class="beat-num mono">W02</span><span class="beat-text">Sound of birds</span></li>
+        <li class="beat"><span class="beat-num mono">W03</span><span class="beat-text">Art collage / collage film</span></li>
+        <li class="beat"><span class="beat-num mono">W04</span><span class="beat-text">Dinners and lunches with loved ones</span></li>
+        <li class="beat"><span class="beat-num mono">W05</span><span class="beat-text">Animals — deer, whales, beautiful creatures</span></li>
+        <li class="beat"><span class="beat-num mono">W06</span><span class="beat-text">The sun through the trees</span></li>
+        <li class="beat"><span class="beat-num mono">W07</span><span class="beat-text">Shadows of people dancing</span></li>
+        <li class="beat"><span class="beat-num mono">W08</span><span class="beat-text">Nature in ways we can't comprehend — mind-blowing</span></li>
+        <li class="beat"><span class="beat-num mono">W09</span><span class="beat-text">"Oh, the mystery of it all"</span></li>
+        <li class="beat"><span class="beat-num mono">W10</span><span class="beat-text">Tiny people in parks, on the beach, around a campfire</span></li>
+        <li class="beat"><span class="beat-num mono">W11</span><span class="beat-text">Film, performance art, people winning awards for making art</span></li>
+        <li class="beat"><span class="beat-num mono">W12</span><span class="beat-text">The pool reminisce — could be mixed media</span></li>
+        <li class="beat"><span class="beat-num mono">W13</span><span class="beat-text">Phones used for wholesome things — texts, photos with family, voice notes</span></li>
+      </ul>
+    </div>
+
+    <div class="beats-col beats-algo">
+      <div class="beats-head mono">Algo <span>— what's eating us</span></div>
+      <ul class="beats-list">
+        <li class="beat"><span class="beat-num mono">A01</span><span class="beat-text">War footage / news cycle violence</span></li>
+        <li class="beat"><span class="beat-num mono">A02</span><span class="beat-text">AI bikini girls — Grok's nonconsensual generations</span></li>
+        <li class="beat"><span class="beat-num mono">A03</span><span class="beat-text">A new Claude update every two seconds</span></li>
+        <li class="beat"><span class="beat-num mono">A04</span><span class="beat-text">People creating, creating, creating — and consuming, consuming, consuming</span></li>
+        <li class="beat"><span class="beat-num mono">A05</span><span class="beat-text">New tools every two seconds that no one ever uses</span></li>
+        <li class="beat"><span class="beat-num mono">A06</span><span class="beat-text">"Sixteen hours on Instagram is not addiction" — Mosseri under oath</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- B — MOOD REFERENCE -->
+<section class="sec" id="mood">
+  <div class="sec-bar">
+    <span class="sec-label mono">B / Mood reference</span>
+    <span class="sec-count mono">Cinematic / not stock</span>
+  </div>
+  <h2 class="sec-title">The visual benchmark — why Artgrid, not Artlist.</h2>
+  <p class="sec-blurb">Artlist is too AI- and stock-heavy now — the kind of "2013 commercial b-roll" we're trying to escape. <strong>Artgrid</strong> (Artlist's sister site) is curated for cinematic feel — actual filmmakers, actual emotion, actual frame composition. Even though it's stock, the selection is what makes it work. The grid below shows the vibe pulled from the Artgrid collection.</p>
+
+  <a class="mood-frame" href="https://artgrid.io/my-collection/531047/twmy" target="_blank" rel="noopener">
+    <img src="img/artgrid-mood-1.png" alt="Artgrid cinematic mood reference — 9-tile grid of curated film stills">
+    <div class="mood-overlay mono">View on Artgrid →</div>
+  </a>
+
+  <a class="mood-frame" href="https://artgrid.io/my-collection/531047/twmy" target="_blank" rel="noopener" style="margin-top: 16px;">
+    <img src="img/artgrid-mood-2.png" alt="Artgrid additional mood reference — birds, lake, deer, geese">
+    <div class="mood-overlay mono">View on Artgrid →</div>
+  </a>
 </section>
 
 <!-- 00 REFERENCE GALLERY -->
@@ -348,6 +542,48 @@
   <div class="masonry" id="refs-grid">
     <!-- JS populates 20 algo + 20 world slots; missing files stay as placeholders -->
   </div>
+</section>
+
+<!-- D — RESOURCES -->
+<section class="sec" id="resources">
+  <div class="sec-bar">
+    <span class="sec-label mono">D / Resources</span>
+    <span class="sec-count mono">Where to dig deeper</span>
+  </div>
+  <h2 class="sec-title">Eyecandy — places to source the look.</h2>
+  <p class="sec-blurb">Curated archives for footage, performance, and visual systems. Skip the AI/stock-heavy stuff. These are where the actual cinematic and the actual weird live.</p>
+
+  <div class="resources-grid">
+    <a class="resource" href="https://artgrid.io/my-collection/531047/twmy" target="_blank" rel="noopener">
+      <div class="resource-head"><span class="resource-name">Artgrid — my collection</span><span class="resource-url mono">artgrid.io</span></div>
+      <p class="resource-blurb">Sister to Artlist but actually cinematic. Even though it's still stock, the curation is so much better — real DPs, real frames. The collection link above shows the exact Artgrid pulls that match the world half. Use as a visual reference even if we don't license from there.</p>
+    </a>
+
+    <a class="resource" href="https://archive.org" target="_blank" rel="noopener">
+      <div class="resource-head"><span class="resource-name">Internet Archive</span><span class="resource-url mono">archive.org</span></div>
+      <p class="resource-blurb">Public domain home movies, 8mm/Super 8 transfers, vintage film, ephemeral footage. Specific collections worth digging: Prelinger Home Movies, A/V Geeks, Center for Home Movies, Texas Archive of the Moving Image. Free, downloadable, no licensing.</p>
+    </a>
+
+    <a class="resource" href="https://www.ubu.com/film/index.html" target="_blank" rel="noopener">
+      <div class="resource-head"><span class="resource-name">UbuWeb — film + video</span><span class="resource-url mono">ubu.com/film</span></div>
+      <p class="resource-blurb">Performance art archive. Avant-garde film, sound poetry, conceptual works, art documentation from the 1900s onward. The "Film, performance art, people winning awards for making art" beat lives here.</p>
+    </a>
+
+    <a class="resource" href="https://nourbenameur-codeart.vercel.app/" target="_blank" rel="noopener">
+      <div class="resource-head"><span class="resource-name">My codeart tool — WIP</span><span class="resource-url mono">nourbenameur-codeart.vercel.app</span></div>
+      <p class="resource-blurb">A generative-art / object-detection tool I'm building. Loads any photo or video and overlays it with COCO-SSD bounding boxes + AI-generated italic poetry ("Every pixel holds a ghost" / "The algorithm remembers you" / "Glitched out like we never happened"). Comes with multiple visual modes — Dragon Curve, Clifford Attractor, Harmonograph, Lissajous Curves, Moiré Interference, ASCII Art, Blob Track, Pixel Mosaic, Text Silhouette, Body Particles. Especially good for the algo half of the film — literally rendering "the algorithm watching." Still WIP; happy to add modes Kiln needs. Drop in a still or clip and play with the parameters (Class Filter, Light Filter, Threshold, Max Blobs, Box Scale, Lines, Text Size, Color, Seed). Controls: pan, double-click resets, space plays, R randomises, S symmetry, D scroll mode.</p>
+      <div class="resource-img" style="aspect-ratio: 21/9"><img src="img/codeart-tool.png" alt="codeart tool — Dolomites image with object detection bounding boxes labeled with poetic captions"></div>
+    </a>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- PART II — PRESS RESEARCH -->
+<!-- ============================== -->
+<section class="part-divider" id="part-two">
+  <div class="part-num mono">Part II</div>
+  <h2 class="part-title">The press research.</h2>
+  <p class="part-sub">The bad sides of tech right now. Court testimony, jury verdicts, viral posts, lawsuits, clinical case studies. 14 threads, ~100 sources. Click any card → opens the original article.</p>
 </section>
 
 <!-- 01 SOCIAL MEDIA ON TRIAL -->
@@ -616,101 +852,83 @@
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <script>
+// Local image paths (downloaded from each article's og:image, hosted in /img/)
 const OG_MAP = {
-  "https://aibm.org/commentary/synthetic-companions-real-risks-why-ai-painkillers-for-loneliness-need-evidence-before-scale/": "https://aibm.org/wp-content/uploads/2025/12/All-Commentary-Images-6.webp",
-  "https://aigoodies.beehiiv.com/p/aesthetics-2026": "https://beehiiv-images-production.s3.amazonaws.com/uploads/asset/file/35253fcf-c14e-4e06-a67c-0142dfad45e7/Thumbnail__2_.png?t=1762877312",
-  "https://bmjgroup.com/concern-over-growing-use-of-ai-chatbots-to-stave-off-loneliness/": "https://bmjgroup.com/wp-content/uploads/2025/12/GettyImages-2017676996.jpg",
-  "https://dailydot.com/adam-mosseri-instagram-not-clinically-addictive": "https://lede-admin.dailydot.com/wp-content/uploads/sites/69/2026/02/adam-mosseri-testifies-instagram-not-addictive.png",
-  "https://drexel.edu/news/archive/2026/April/teen-AI-chatbot-addiction": "http://drexel.edu/news/~/media/Drexel/Core-Site-Group/News/Images/v2/story-images/2026/April/AI-Chatbot-Addiction/ai-chatbot-addiction_16x9.jpg",
-  "https://fortune.com/2026/01/08/google-character-ai-settle-lawsuits-teenage-child-suicides-chatbots/": "https://fortune.com/img-assets/wp-content/uploads/2026/01/GettyImages-2164565338.jpg?resize=1200,600",
-  "https://fortune.com/2026/02/12/instagram-adam-mosseri-compensation-900000-denies-app-is-addictive-testimony/": "https://fortune.com/img-assets/wp-content/uploads/2026/02/GettyImages-2260607461.jpg?resize=1200,600",
-  "https://fortune.com/2026/03/05/mark-zuckerberg-adam-mosseris-words-used-against-them-in-never-before-seen-videos-airing-in-addiction-trial/": "https://fortune.com/img-assets/wp-content/uploads/2026/03/AP26050035832286-e1772717809479.jpg?resize=1200,600",
-  "https://fortune.com/2026/03/07/chatbots-ai-psychosis-worsen-delusions-mania-mental-illness-health/": "https://fortune.com/img-assets/wp-content/uploads/2026/03/GettyImages-1256204340-e1772732601169.jpg?resize=1200,600",
-  "https://fortune.com/2026/04/14/ai-backlash-revolutionary-sam-altman-molotov-cocktails-data-centers/": "https://fortune.com/img-assets/wp-content/uploads/2026/04/GettyImages-2197366854-e1776194877963.jpg?resize=1200,600",
-  "https://fortune.com/2026/04/14/sam-altman-openai-ceo-attacked-molotov-cocktail-gunshots-san-francisco-anti-ai-data-centers-tech/": "https://fortune.com/img-assets/wp-content/uploads/2026/04/GettyImages-2265992525_8e2d7c-e1776180538847.jpg?resize=1200,600",
-  "https://fortune.com/2026/04/16/anti-ai-sentiment-is-rising-and-its-starting-to-turn-violent/": "https://fortune.com/img-assets/wp-content/uploads/2026/04/GettyImages-2263498981-e1776357512712.jpg?resize=1200,600",
-  "https://fortune.com/2026/04/24/anthropic-engineering-missteps-claude-code-performance-decline-user-backlash/": "https://fortune.com/img-assets/wp-content/uploads/2026/04/GettyImages-2153554332_b4b305-e1777029162631.jpg?resize=1200,600",
-  "https://gizmodo.com/claude-powered-agent-apparently-deletes-company-database-debases-itself-further-in-confession-2000751528": "https://gizmodo.com/app/uploads/2026/02/claude-code-1200x675.jpg",
-  "https://incidentdatabase.ai/cite/826/": "https://res.cloudinary.com/pai/image/upload/v1/reports/regmedia.co.uk/2018/05/29/security_australia_shutterstock.jpg",
-  "https://petapixel.com/2026/01/02/sickening-photo-trend-on-x-sees-womens-clothing-being-removed-by-grok/": "https://petapixel.com/assets/uploads/2026/01/X-Twitter-Elon-Musk.jpg",
-  "https://restofworld.org/2026/musk-grok-bikini-trend/": "https://restofworld.org/wp-content/uploads/2026/01/gettyimages-2198822267-594x594-1.jpg",
-  "https://science.ubc.ca/news/2026-04/are-you-addicted-your-ai-chatbot-it-might-be-design": "https://science.ubc.ca/sites/default/files/styles/max_650x650/public/feature-images/2026-04/l-ch-s3jgtj91pio-unsplash.jpg?itok=IwvAwhW5",
-  "https://sfstandard.com/2026/04/12/sam-altman-s-home-targeted-second-attack/": "https://assets.sfstandard.com/image/994911177489/image_p0d3ia6va54sl6814v8lshso4g/-C100.00%25x74.91%25%2C0.00%25%2C0.00%25-S1200x630-FPNG",
-  "https://www.anthropic.com/engineering/april-23-postmortem": "https://cdn.sanity.io/images/4zrzovbb/website/3f522820d47355885631ebda60e5d1f3e5c0fbc2-2000x1050.heif",
-  "https://www.businessoffashion.com/articles/beauty/the-anti-ai-aesthetic-taking-over-social-media/": "https://img.businessoffashion.com/resizer/v2/E5BWGQROW5BBTH2AF4MAUTTVGM.jpg?smart=true&width=1200&height=630",
-  "https://www.cbsnews.com/news/google-settle-lawsuit-florida-teens-suicide-character-ai-chatbot/": "https://assets2.cbsnewsstatic.com/hub/i/r/2025/09/16/150665fb-1e37-4f48-a0f8-a35c74497491/thumbnail/1200x630/02830b20cb87d93a374bbf67fa070290/ap25259577980088.jpg",
-  "https://www.cnbc.com/2026/01/07/google-characterai-to-settle-suits-involving-suicides-ai-chatbots.html": "https://image.cnbcfm.com/api/v1/image/108129295-1744218928137-gettyimages-2198801879-radecka-meetingw250213_npxot.jpeg",
-  "https://www.cnbc.com/2026/04/10/sam-altman-house-hit-with-molotov-cocktail-openai-office-threatened.html": "https://image.cnbcfm.com/api/v1/image/108277141-17733159142026-03-11t184619z_378292367_rc2i2ka95hnw_rtrmadp_0_usa-blackrock.jpeg",
-  "https://www.devclass.com/ai-ml/2026/04/01/anthropic-admits-claude-code-users-hitting-usage-limits-way-faster-than-expected/5213575": "https://image.devclass.com/1623288.jpg",
-  "https://www.dexerto.com/tiktok/new-study-reveals-tiktok-instagram-content-actually-rots-your-brain-3285565/": "https://www.dexerto.com/cdn-image/wp-content/uploads/2022/07/14/TikTokLogoPhone.jpg",
-  "https://www.malwarebytes.com/blog/news/2026/01/grok-apologizes-for-creating-image-of-young-girls-in-sexualized-attire": "https://www.malwarebytes.com/wp-content/uploads/sites/2/2026/01/Grok_logo.png",
-  "https://www.nature.com/articles/d41586-025-03020-9": "https://media.nature.com/lw1200/magazine-assets/d41586-025-03020-9/d41586-025-03020-9_51456716.jpg",
-  "https://www.nbcnews.com/tech/tech-news/musks-ai-chatbot-grok-xai-making-sexual-deepfakes-imagine-rcna265855": "https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/rockcms/2026-04/260413-Elon-Grok-NSFW-images-jg-1d609c.jpg",
-  "https://www.npr.org/2026/01/12/nx-s1-5672579/grok-women-children-bikini-elon-musk": "https://npr.brightspotcdn.com/dims3/default/strip/false/crop/4941x2779+0+0/resize/1400/quality/85/format/jpeg/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2Ff0%2F8d%2Ff5092de2426f8f66fe4e39cedced%2Fgettyimages-2255889313.jpg",
-  "https://www.psychologytoday.com/us/blog/urban-survival/202507/the-emerging-problem-of-ai-psychosis": "https://cdn2.psychologytoday.com/assets/styles/manual_crop_1_91_1_1528x800/public/teaser_image/blog_entry/2025-07/pexels-tima-miroshnichenko-7567537.jpg?itok=qdm_6yBo",
-  "https://www.pymnts.com/artificial-intelligence-2/2026/ai-usage-limits-are-becoming-the-new-reality-for-consumers/": "https://www.pymnts.com/wp-content/uploads/2023/10/Anthropic-AI-Artificial-Intelligence.jpg",
-  "https://www.rollingstone.com/culture/culture-features/grok-ai-deepfake-porn-elon-musk-1235494809/": "https://www.rollingstone.com/wp-content/uploads/2026/01/musk-grok-nonconsensual.jpg?w=1600",
-  "https://www.rollingstone.com/culture/culture-news/instagram-adam-mosseri-social-media-addiction-trial-1235514640/": "https://www.rollingstone.com/wp-content/uploads/2026/02/adam-mosseri-testimony.jpg?w=1600",
-  "https://www.thequint.com/news/webqoof/grok-put-her-in-a-bikini-harmful-trend-ai-safety-harm-regulation": "https://media.assettype.com/thequint%2F2026-01-29%2Fpx3lsj3w%2F1-1.jpg",
-  "https://www.theregister.com/2026/04/23/anthropic_says_it_has_fixed/": "https://regmedia.co.uk/2021/06/02/bug.jpg"
+  "https://aibm.org/commentary/synthetic-companions-real-risks-why-ai-painkillers-for-loneliness-need-evidence-before-scale/": "img/64b54e7b.webp",
+  "https://aigoodies.beehiiv.com/p/aesthetics-2026": "img/e69a7db9.png",
+  "https://bmjgroup.com/concern-over-growing-use-of-ai-chatbots-to-stave-off-loneliness/": "img/de48e74e.jpg",
+  "https://dailydot.com/adam-mosseri-instagram-not-clinically-addictive": "img/cfac88a2.png",
+  "https://drexel.edu/news/archive/2026/April/teen-AI-chatbot-addiction": "img/30e075dc.jpg",
+  "https://fortune.com/2026/01/08/google-character-ai-settle-lawsuits-teenage-child-suicides-chatbots/": "img/d09f47d7.jpg",
+  "https://fortune.com/2026/02/12/instagram-adam-mosseri-compensation-900000-denies-app-is-addictive-testimony/": "img/93dc9eb7.jpg",
+  "https://fortune.com/2026/03/05/mark-zuckerberg-adam-mosseris-words-used-against-them-in-never-before-seen-videos-airing-in-addiction-trial/": "img/c46d892c.jpg",
+  "https://fortune.com/2026/03/07/chatbots-ai-psychosis-worsen-delusions-mania-mental-illness-health/": "img/060cc79b.jpg",
+  "https://fortune.com/2026/04/14/ai-backlash-revolutionary-sam-altman-molotov-cocktails-data-centers/": "img/f67805ee.jpg",
+  "https://fortune.com/2026/04/14/sam-altman-openai-ceo-attacked-molotov-cocktail-gunshots-san-francisco-anti-ai-data-centers-tech/": "img/ad010274.jpg",
+  "https://fortune.com/2026/04/16/anti-ai-sentiment-is-rising-and-its-starting-to-turn-violent/": "img/6e4ee9b9.jpg",
+  "https://fortune.com/2026/04/24/anthropic-engineering-missteps-claude-code-performance-decline-user-backlash/": "img/10744804.jpg",
+  "https://gizmodo.com/claude-powered-agent-apparently-deletes-company-database-debases-itself-further-in-confession-2000751528": "img/78a52a7d.jpg",
+  "https://incidentdatabase.ai/cite/826/": "img/57ceb7c7.jpg",
+  "https://petapixel.com/2026/01/02/sickening-photo-trend-on-x-sees-womens-clothing-being-removed-by-grok/": "img/9070ae0c.jpg",
+  "https://restofworld.org/2026/musk-grok-bikini-trend/": "img/d608e70f.jpg",
+  "https://science.ubc.ca/news/2026-04/are-you-addicted-your-ai-chatbot-it-might-be-design": "img/889a0d56.jpg",
+  "https://www.anthropic.com/engineering/april-23-postmortem": "img/dea52d95.jpg",
+  "https://www.cbsnews.com/news/google-settle-lawsuit-florida-teens-suicide-character-ai-chatbot/": "img/3551bf2a.jpg",
+  "https://www.cnbc.com/2026/01/07/google-characterai-to-settle-suits-involving-suicides-ai-chatbots.html": "img/99144133.jpeg",
+  "https://www.cnbc.com/2026/04/10/sam-altman-house-hit-with-molotov-cocktail-openai-office-threatened.html": "img/2adef83c.jpeg",
+  "https://www.devclass.com/ai-ml/2026/04/01/anthropic-admits-claude-code-users-hitting-usage-limits-way-faster-than-expected/5213575": "img/a68fb824.jpg",
+  "https://www.dexerto.com/tiktok/new-study-reveals-tiktok-instagram-content-actually-rots-your-brain-3285565/": "img/6518760b.jpg",
+  "https://www.malwarebytes.com/blog/news/2026/01/grok-apologizes-for-creating-image-of-young-girls-in-sexualized-attire": "img/62c52aa8.png",
+  "https://www.nature.com/articles/d41586-025-03020-9": "img/0ce311fe.jpg",
+  "https://www.nbcnews.com/tech/tech-news/musks-ai-chatbot-grok-xai-making-sexual-deepfakes-imagine-rcna265855": "img/412f1caf.jpg",
+  "https://www.npr.org/2026/01/12/nx-s1-5672579/grok-women-children-bikini-elon-musk": "img/45211790.jpg",
+  "https://www.psychologytoday.com/us/blog/urban-survival/202507/the-emerging-problem-of-ai-psychosis": "img/2c3791b2.jpg",
+  "https://www.pymnts.com/artificial-intelligence-2/2026/ai-usage-limits-are-becoming-the-new-reality-for-consumers/": "img/ee4c234d.jpg",
+  "https://www.rollingstone.com/culture/culture-features/grok-ai-deepfake-porn-elon-musk-1235494809/": "img/4b764024.jpg",
+  "https://www.rollingstone.com/culture/culture-news/instagram-adam-mosseri-social-media-addiction-trial-1235514640/": "img/468d4c09.jpg",
+  "https://www.thequint.com/news/webqoof/grok-put-her-in-a-bikini-harmful-trend-ai-safety-harm-regulation": "img/ad852a0f.jpg",
+  "https://www.theregister.com/2026/04/23/anthropic_says_it_has_fixed/": "img/4828b751.jpg"
 };
 
 const fallbackImg = (url) => `https://image.thum.io/get/width/1200/maxAge/720/noanimate/${encodeURIComponent(url)}`;
 
-// Populate references gallery (20 algo + 20 world slots, alternating)
+// Reference files actually present in references/algo and references/world
+const REFS_ALGO = ["0032419eec343a3f271cac56a659c3fc.jpg","1a0af1fbbeb48e64dea2355ee6fab67a.jpg","261702704636.webp","261703028230.webp","261703451442.webp","261706250091.webp","261706250650.webp","261706251990.webp","2942f9143034d4e7241aad62d0d9bf20.jpg","392bbdf2-b1ff-4266-8936-693a6e799f20.jpeg","55320e57eaaa7bf6dd467831e4d6bebb.jpg","72ebca3d-4144-44d3-b367-a32dc499039f.jpeg","IMG_1137.PNG","IMG_1138.PNG","IMG_1139.PNG","IMG_1140.PNG","IMG_1141.PNG","fa8a70228666df56ee3a395517d8f1c9.jpg"];
+const REFS_WORLD = ["ssstik.io_@asilcinematicfilmes_1777454353695.mp4","ssstik.io_@hhhhhhhhhhhhhhyy_1777454056309.mp4","ssstik.io_@jessamongthewild_1777454268551.mp4","ssstik.io_@oliviaduse_1777454289458.mp4","ssstik.io_@savoirfaireeee_1777454335295.mp4","v09044g40000cuiu30nog65s9okjthfg.MP4","v12044gd0000d4r31v7og65pfpqv9cug.MP4","v12044gd0000d4tpfufog65peik2shlg.MP4","v12044gd0000d68lugnog65qb1amvddg.MP4","v12044gd0000d69mnuvog65quq4utl7g.MP4","v12044gd0000d6b4osfog65oni8uau8g.MP4","v12044gd0000d6oh1u7og65uoar7ats0.MP4","v12044gd0000d6op2efog65ulshnp0c0.MP4","v12044gd0000d6qrcdnog65k8r8p55eg.MP4","v12044gd0000d74eakvog65hjlh5s9v0.MP4","v12044gd0000d75be6fog65hhlu4hktg.MP4","v12044gd0000d76fu57og65ns8g8ij80.MP4","v12044gd0000d770fkvog65sm7r0pipg.MP4","v12044gd0000d7m2covog65vtfdpagj0.MP4","v14025g50000d6frgq7og65k934hlmig.MP4","v14044g50000d6nudbvog65u2jm9bri0.MP4","v14044g50000d77aaonog65mq147659g.MP4","v15044gf0000d0h7dkfog65vv7kuou30.MP4","v15044gf0000d4og8qvog65mbfq49f0g.MP4","v15044gf0000d6bhd5fog65pc4egcqa0.MP4","v15044gf0000d6bkl87og65iblkiuifg.MP4","v15044gf0000d6n4i2nog65oqv2qordg.MP4","v15044gf0000d70cbfvog65hton34ks0.MP4","v15044gf0000d7109knog65ubiklv2e0.MP4","v15044gf0000d7717f7og65r5otkn43g.MP4","v15044gf0000d77bjkvog65mqnldlru0.MP4","v15044gf0000d78onavog65ke21eir7g.MP4","v15044gf0000d7b2os7og65oc5alue9g.MP4","v15044gf0000d7e32nvog65m07a4esqg.MP4","v15044gf0000d7gp24vog65on5l654bg.MP4","v1c025g50000cukc6mfog65nlsf49ls0.MP4","v1c044g50000d43218fog65gf2b8h3cg.MP4","v1c044g50000d6amnafog65kc9gullg0.MP4","v1c044g50000d6c6o77og65i7c3kuo6g.MP4","v1c044g50000d7af7pfog65oj28h6lvg.MP4","v24044gl0000cts166nog65r0o9iv0kg.MP4","v24044gl0000d40v71nog65jdkulbl10.MP4","v24044gl0000d51cab7og65io8o6bpbg.MP4","v24044gl0000d5hcrevog65mfj4nhuh0.MP4","v24044gl0000d5vpvvnog65rlf83qkp0.MP4","v24044gl0000d6jjfcfog65vk0s3rrig.MP4","v24044gl0000d6ldtovog65meeb06a00.MP4","v24044gl0000d6u7vq7og65k2d46mki0.MP4","v24044gl0000d70tfmvog65l1gmf6df0.MP4","v24044gl0000d72t8rfog65pnn9lkdqg.MP4","v24044gl0000d7a1g87og65o7bhsbkig.MP4","v24044gl0000d7bndevog65o0jhpmhpg.MP4","v24044gl0000d7frk7vog65m02eodrs0.MP4","v24044gl0000d7igkmfog65visfeobe0.MP4","v24044gl0000d7j78tvog65gabi678dg.MP4","v24044gl0000d7j8nkfog65gp7jit940.MP4","v24044gl0000d7kf20nog65m9vh58390.MP4","v24044gl0000d7kuep7og65ufhbkuu80.MP4","v26044gc0000d6vrvlvog65p6p09doeg.MP4","v26044gc0000d7aolsfog65n5u4i8u10.MP4","v26044gc0000d7aouinog65l767v7780.MP4","v26044gc0000d7n4lb7og65g1sbp3peg.MP4"];
+
+// Populate references gallery from real files
 (function buildRefsGrid() {
   const grid = document.getElementById('refs-grid');
   if (!grid) return;
-  const ratios = ['r-tall', 'r-square', 'r-landscape', 'r-portrait', 'r-square', 'r-landscape', 'r-tall', 'r-portrait'];
-  const slots = [];
-  for (let i = 1; i <= 20; i++) {
-    slots.push({ kind: 'algo', n: i });
-    slots.push({ kind: 'world', n: i });
+  const ratios = ['r-tall', 'r-square', 'r-landscape', 'r-portrait', 'r-square', 'r-tall', 'r-landscape', 'r-portrait'];
+  // Interleave algo + world so they're side by side in the masonry
+  const items = [];
+  const max = Math.max(REFS_ALGO.length, REFS_WORLD.length);
+  for (let i = 0; i < max; i++) {
+    if (REFS_WORLD[i]) items.push({ kind: 'world', file: REFS_WORLD[i] });
+    if (REFS_ALGO[i]) items.push({ kind: 'algo', file: REFS_ALGO[i] });
   }
-  slots.forEach((slot, idx) => {
-    const num = String(slot.n).padStart(2, '0');
+  items.forEach((item, idx) => {
     const ratio = ratios[idx % ratios.length];
-    const path = `references/${slot.kind}/${num}`;
+    const path = `references/${item.kind}/${item.file}`;
+    const ext = item.file.split('.').pop().toLowerCase();
+    const isVideo = ['mp4', 'webm', 'mov'].includes(ext);
+    const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
     const card = document.createElement('div');
     card.className = 'card';
+    const label = item.kind === 'algo' ? 'Algo' : 'World';
+    const num = String(idx + 1).padStart(2, '0');
+    let media = '';
+    if (isVideo) {
+      media = `<video src="${path}" autoplay muted loop playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover"></video>`;
+    } else if (isImage) {
+      media = `<img src="${path}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover">`;
+    }
     card.innerHTML = `
-      <div class="card-img ${ratio}" data-ref="${path}">
-        <div class="card-img-fallback"><div><small>${slot.kind} / drop slot</small>${path}.mp4</div></div>
-      </div>
-      <div class="card-meta mono"><strong>${slot.kind === 'algo' ? 'Algo' : 'World'}</strong><span>${num}</span></div>
+      <div class="card-img ${ratio}" style="background:#000">${media}</div>
+      <div class="card-meta mono"><strong>${label}</strong><span>${num}</span></div>
     `;
     grid.appendChild(card);
-    // Probe for video file
-    const wrap = card.querySelector('.card-img');
-    const tryExt = (exts) => {
-      if (exts.length === 0) return;
-      const ext = exts[0];
-      const url = `${path}.${ext}`;
-      if (ext === 'gif') {
-        const img = new Image();
-        img.onload = () => {
-          const el = document.createElement('img');
-          el.src = url; el.loading = 'lazy';
-          el.style.opacity = 0;
-          el.onload = () => { el.style.opacity = 1; wrap.querySelector('.card-img-fallback')?.remove(); };
-          wrap.appendChild(el);
-        };
-        img.onerror = () => tryExt(exts.slice(1));
-        img.src = url;
-      } else {
-        fetch(url, { method: 'HEAD' }).then(r => {
-          if (r.ok) {
-            const v = document.createElement('video');
-            v.src = url; v.autoplay = true; v.muted = true; v.loop = true; v.playsInline = true;
-            v.style.width = '100%'; v.style.height = '100%'; v.style.objectFit = 'cover';
-            v.style.opacity = 0; v.style.transition = 'opacity 0.4s ease';
-            v.onloadeddata = () => { v.style.opacity = 1; wrap.querySelector('.card-img-fallback')?.remove(); };
-            wrap.appendChild(v);
-          } else { tryExt(exts.slice(1)); }
-        }).catch(() => tryExt(exts.slice(1)));
-      }
-    };
-    tryExt(['mp4', 'webm', 'gif']);
   });
 })();
 
