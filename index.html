@@ -910,9 +910,38 @@ const REFS_WORLD = ["ssstik.io_@asilcinematicfilmes_1777454353695.mp4","ssstik.i
     if (REFS_WORLD[i]) items.push({ kind: 'world', file: REFS_WORLD[i] });
     if (REFS_ALGO[i]) items.push({ kind: 'algo', file: REFS_ALGO[i] });
   }
+  // Lazy-load observer: spawn img/video only when card scrolls near viewport
+  const refsObs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const wrap = e.target;
+      refsObs.unobserve(wrap);
+      const path = wrap.dataset.path;
+      const kind = wrap.dataset.kind;
+      if (kind === 'video') {
+        const v = document.createElement('video');
+        v.src = path;
+        v.autoplay = true; v.muted = true; v.loop = true; v.playsInline = true;
+        v.preload = 'auto';
+        v.setAttribute('playsinline', '');
+        v.setAttribute('webkit-playsinline', '');
+        v.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+        v.onloadeddata = () => v.play().catch(() => {});
+        wrap.appendChild(v);
+        // Try to play after a brief delay too (autoplay race conditions)
+        setTimeout(() => v.play().catch(() => {}), 100);
+      } else if (kind === 'image') {
+        const i = document.createElement('img');
+        i.src = path; i.loading = 'lazy'; i.alt = '';
+        i.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+        wrap.appendChild(i);
+      }
+    });
+  }, { rootMargin: '300px 0px' });
+
   items.forEach((item, idx) => {
     const ratio = ratios[idx % ratios.length];
-    const path = `references/${item.kind}/${item.file}`;
+    const path = `references/${item.kind}/${encodeURI(item.file)}`;
     const ext = item.file.split('.').pop().toLowerCase();
     const isVideo = ['mp4', 'webm', 'mov'].includes(ext);
     const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
@@ -920,17 +949,12 @@ const REFS_WORLD = ["ssstik.io_@asilcinematicfilmes_1777454353695.mp4","ssstik.i
     card.className = 'card';
     const label = item.kind === 'algo' ? 'Algo' : 'World';
     const num = String(idx + 1).padStart(2, '0');
-    let media = '';
-    if (isVideo) {
-      media = `<video src="${path}" autoplay muted loop playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover"></video>`;
-    } else if (isImage) {
-      media = `<img src="${path}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover">`;
-    }
     card.innerHTML = `
-      <div class="card-img ${ratio}" style="background:#000">${media}</div>
+      <div class="card-img ${ratio}" style="background:#1a1a18" data-path="${path}" data-kind="${isVideo ? 'video' : 'image'}"></div>
       <div class="card-meta mono"><strong>${label}</strong><span>${num}</span></div>
     `;
     grid.appendChild(card);
+    refsObs.observe(card.querySelector('.card-img'));
   });
 })();
 
