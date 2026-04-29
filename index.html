@@ -390,6 +390,18 @@
   }
   .resource-img img { width: 100%; height: 100%; object-fit: cover; }
 
+  .play-badge {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.78);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    pointer-events: none;
+  }
+
   .ref-subhead {
     font-size: 18px;
     font-weight: 500;
@@ -1000,12 +1012,8 @@ function renderRefsGrid(gridId, files, kind) {
     if (isVideo) {
       const baseName = file.replace(/\.(mp4|webm|mov)$/i, '');
       const thumb = `references/world-thumbs/${encodeURI(baseName)}.jpg`;
-      // Show thumbnail by default; play on hover (works reliably even when autoplay is blocked)
-      media = `
-        <img src="${thumb}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block;background:#1a1a18">
-        <video data-src="${path}" muted loop playsinline webkit-playsinline preload="none"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity 0.3s"></video>
-      `;
+      media = `<img src="${thumb}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block;background:#1a1a18">
+               <div class="play-badge mono">▶ Play</div>`;
     } else if (isImage) {
       media = `<img src="${path}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block;background:#1a1a18">`;
     }
@@ -1014,20 +1022,9 @@ function renderRefsGrid(gridId, files, kind) {
       <div class="card-meta mono"><strong>${label}</strong><span>${num}</span></div>
     `;
     grid.appendChild(card);
-    // Play video on hover (loads only when needed → no quota issues)
-    const v = card.querySelector('video');
-    if (v) {
+    if (isVideo) {
       const wrap = card.querySelector('.card-img');
-      wrap.style.position = 'relative';
-      card.addEventListener('mouseenter', () => {
-        if (!v.src) v.src = v.dataset.src;
-        v.play().catch(() => {});
-        v.style.opacity = '1';
-      });
-      card.addEventListener('mouseleave', () => {
-        v.style.opacity = '0';
-        v.pause();
-      });
+      if (wrap) wrap.style.position = 'relative';
     }
   });
 }
