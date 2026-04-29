@@ -258,6 +258,27 @@
     align-items: start;
   }
   .embed-card { background: var(--card); border-radius: 6px; overflow: hidden; padding: 4px; min-height: 200px; }
+  .x-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 780px) { .x-links { grid-template-columns: 1fr; } }
+  .x-link {
+    display: block;
+    padding: 16px 18px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.45;
+    transition: opacity 0.2s;
+  }
+  .x-link:hover { opacity: 0.88; }
+  .x-link .mono {
+    color: rgba(244,243,239,0.7);
+    margin-right: 6px;
+  }
   .embed-card .twitter-tweet, .embed-card .instagram-media {
     margin: 0 auto !important; width: 100% !important; max-width: 100% !important;
   }
@@ -368,6 +389,25 @@
     overflow: hidden;
   }
   .resource-img img { width: 100%; height: 100%; object-fit: cover; }
+
+  .ref-subhead {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 32px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ref-subhead .mono {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
 
   /* PART DIVIDER */
   .part-divider {
@@ -533,12 +573,14 @@
     <div><span class="sec-label mono">00 / Reference gallery</span></div>
     <div class="sec-count mono">80 references</div>
   </div>
-  <h2 class="sec-title">Saved film references — algo + world.</h2>
-  <p class="sec-blurb">Algo-side references (left tone, glitchy, screen-grabs of the news threads + AI dystopia) and world-side references (cinematic / hopecore / nature / contemplative) auto-loaded from the GitHub repo.</p>
+  <h2 class="sec-title">Saved film references — split by half.</h2>
+  <p class="sec-blurb">Auto-loaded from GitHub. World half first (cinematic / hopecore / nature / contemplative — 62 videos). Algo half after (glitchy / news / dystopia screen-grabs — 18 images).</p>
 
-  <div class="masonry" id="refs-grid">
-    <!-- JS populates 20 algo + 20 world slots; missing files stay as placeholders -->
-  </div>
+  <h3 class="ref-subhead"><span class="mono">World</span> — cinematic / hopecore</h3>
+  <div class="masonry" id="refs-world"></div>
+
+  <h3 class="ref-subhead" style="margin-top: 64px;"><span class="mono">Algo</span> — glitch / news / dystopia</h3>
+  <div class="masonry" id="refs-algo"></div>
 </section>
 
 <!-- D — RESOURCES -->
@@ -607,12 +649,12 @@
     <a class="card" href="https://www.spencer-law.com/post/social-media-addiction-lawsuits-2026-kgm-trial-mdl-3047" target="_blank" rel="noopener" data-url="https://www.spencer-law.com/post/social-media-addiction-lawsuits-2026-kgm-trial-mdl-3047" data-ratio="r-landscape"><div class="card-img r-landscape"><div class="card-img-fallback"><div><small>Spencer Law</small>MDL 3047 — 2,465 pending suits</div></div></div><div class="card-meta mono"><strong>Spencer Law</strong><span>2026</span></div><div class="card-title">Social Media Addiction Lawsuits 2026: KGM Trial, MDL 3047</div></a>
   </div>
 
-  <div class="embeds-bar mono">— Live coverage from the courtroom</div>
-  <div class="embeds-grid">
-    <div class="embed-card"><blockquote class="twitter-tweet" data-theme="light" data-conversation="none"><a href="https://x.com/meghanncuniff/status/2021613031524823276"></a></blockquote></div>
-    <div class="embed-card"><blockquote class="twitter-tweet" data-theme="light" data-conversation="none"><a href="https://x.com/FortuneMagazine/status/2022113545849102804"></a></blockquote></div>
-    <div class="embed-card"><blockquote class="twitter-tweet" data-theme="light" data-conversation="none"><a href="https://x.com/business/status/2021634865951576429"></a></blockquote></div>
-    <div class="embed-card"><blockquote class="twitter-tweet" data-theme="light" data-conversation="none"><a href="https://x.com/dormircourant/status/2022631351929950519"></a></blockquote></div>
+  <div class="embeds-bar mono">— Live coverage on X</div>
+  <div class="x-links">
+    <a href="https://x.com/meghanncuniff/status/2021613031524823276" target="_blank" rel="noopener" class="x-link"><span class="mono">@meghanncuniff</span> Reporter live-tweeting from courtroom: parents camped in LA rain for 10 public seats →</a>
+    <a href="https://x.com/FortuneMagazine/status/2022113545849102804" target="_blank" rel="noopener" class="x-link"><span class="mono">@FortuneMagazine</span> Mosseri's $900K compensation comes under fire during testimony →</a>
+    <a href="https://x.com/business/status/2021634865951576429" target="_blank" rel="noopener" class="x-link"><span class="mono">@business</span> Bloomberg: Mosseri set to take stand at landmark trial →</a>
+    <a href="https://x.com/dormircourant/status/2022631351929950519" target="_blank" rel="noopener" class="x-link"><span class="mono">@dormircourant</span> "Le PDG d'Instagram affirme que 16 heures par jour ne relève pas de l'addiction" →</a>
   </div>
 </section>
 
@@ -895,26 +937,20 @@ const fallbackChain = (url) => [
 
 // Reference files actually present in references/algo and references/world
 const REFS_ALGO = ["0032419eec343a3f271cac56a659c3fc.jpg","1a0af1fbbeb48e64dea2355ee6fab67a.jpg","261702704636.webp","261703028230.webp","261703451442.webp","261706250091.webp","261706250650.webp","261706251990.webp","2942f9143034d4e7241aad62d0d9bf20.jpg","392bbdf2-b1ff-4266-8936-693a6e799f20.jpeg","55320e57eaaa7bf6dd467831e4d6bebb.jpg","72ebca3d-4144-44d3-b367-a32dc499039f.jpeg","IMG_1137.PNG","IMG_1138.PNG","IMG_1139.PNG","IMG_1140.PNG","IMG_1141.PNG","fa8a70228666df56ee3a395517d8f1c9.jpg"];
-const REFS_WORLD = ["ssstik.io_@asilcinematicfilmes_1777454353695.mp4","ssstik.io_@hhhhhhhhhhhhhhyy_1777454056309.mp4","ssstik.io_@jessamongthewild_1777454268551.mp4","ssstik.io_@oliviaduse_1777454289458.mp4","ssstik.io_@savoirfaireeee_1777454335295.mp4","v09044g40000cuiu30nog65s9okjthfg.MP4","v12044gd0000d4r31v7og65pfpqv9cug.MP4","v12044gd0000d4tpfufog65peik2shlg.MP4","v12044gd0000d68lugnog65qb1amvddg.MP4","v12044gd0000d69mnuvog65quq4utl7g.MP4","v12044gd0000d6b4osfog65oni8uau8g.MP4","v12044gd0000d6oh1u7og65uoar7ats0.MP4","v12044gd0000d6op2efog65ulshnp0c0.MP4","v12044gd0000d6qrcdnog65k8r8p55eg.MP4","v12044gd0000d74eakvog65hjlh5s9v0.MP4","v12044gd0000d75be6fog65hhlu4hktg.MP4","v12044gd0000d76fu57og65ns8g8ij80.MP4","v12044gd0000d770fkvog65sm7r0pipg.MP4","v12044gd0000d7m2covog65vtfdpagj0.MP4","v14025g50000d6frgq7og65k934hlmig.MP4","v14044g50000d6nudbvog65u2jm9bri0.MP4","v14044g50000d77aaonog65mq147659g.MP4","v15044gf0000d0h7dkfog65vv7kuou30.MP4","v15044gf0000d4og8qvog65mbfq49f0g.MP4","v15044gf0000d6bhd5fog65pc4egcqa0.MP4","v15044gf0000d6bkl87og65iblkiuifg.MP4","v15044gf0000d6n4i2nog65oqv2qordg.MP4","v15044gf0000d70cbfvog65hton34ks0.MP4","v15044gf0000d7109knog65ubiklv2e0.MP4","v15044gf0000d7717f7og65r5otkn43g.MP4","v15044gf0000d77bjkvog65mqnldlru0.MP4","v15044gf0000d78onavog65ke21eir7g.MP4","v15044gf0000d7b2os7og65oc5alue9g.MP4","v15044gf0000d7e32nvog65m07a4esqg.MP4","v15044gf0000d7gp24vog65on5l654bg.MP4","v1c025g50000cukc6mfog65nlsf49ls0.MP4","v1c044g50000d43218fog65gf2b8h3cg.MP4","v1c044g50000d6amnafog65kc9gullg0.MP4","v1c044g50000d6c6o77og65i7c3kuo6g.MP4","v1c044g50000d7af7pfog65oj28h6lvg.MP4","v24044gl0000cts166nog65r0o9iv0kg.MP4","v24044gl0000d40v71nog65jdkulbl10.MP4","v24044gl0000d51cab7og65io8o6bpbg.MP4","v24044gl0000d5hcrevog65mfj4nhuh0.MP4","v24044gl0000d5vpvvnog65rlf83qkp0.MP4","v24044gl0000d6jjfcfog65vk0s3rrig.MP4","v24044gl0000d6ldtovog65meeb06a00.MP4","v24044gl0000d6u7vq7og65k2d46mki0.MP4","v24044gl0000d70tfmvog65l1gmf6df0.MP4","v24044gl0000d72t8rfog65pnn9lkdqg.MP4","v24044gl0000d7a1g87og65o7bhsbkig.MP4","v24044gl0000d7bndevog65o0jhpmhpg.MP4","v24044gl0000d7frk7vog65m02eodrs0.MP4","v24044gl0000d7igkmfog65visfeobe0.MP4","v24044gl0000d7j78tvog65gabi678dg.MP4","v24044gl0000d7j8nkfog65gp7jit940.MP4","v24044gl0000d7kf20nog65m9vh58390.MP4","v24044gl0000d7kuep7og65ufhbkuu80.MP4","v26044gc0000d6vrvlvog65p6p09doeg.MP4","v26044gc0000d7aolsfog65n5u4i8u10.MP4","v26044gc0000d7aouinog65l767v7780.MP4","v26044gc0000d7n4lb7og65g1sbp3peg.MP4"];
+const REFS_WORLD = ["ssstik.io_@asilcinematicfilmes_1777454353695.mp4","ssstik.io_@hhhhhhhhhhhhhhyy_1777454056309.mp4","ssstik.io_@jessamongthewild_1777454268551.mp4","ssstik.io_@oliviaduse_1777454289458.mp4","ssstik.io_@savoirfaireeee_1777454335295.mp4","v09044g40000cuiu30nog65s9okjthfg.mp4","v12044gd0000d4r31v7og65pfpqv9cug.mp4","v12044gd0000d4tpfufog65peik2shlg.mp4","v12044gd0000d68lugnog65qb1amvddg.mp4","v12044gd0000d69mnuvog65quq4utl7g.mp4","v12044gd0000d6b4osfog65oni8uau8g.mp4","v12044gd0000d6oh1u7og65uoar7ats0.mp4","v12044gd0000d6op2efog65ulshnp0c0.mp4","v12044gd0000d6qrcdnog65k8r8p55eg.mp4","v12044gd0000d74eakvog65hjlh5s9v0.mp4","v12044gd0000d75be6fog65hhlu4hktg.mp4","v12044gd0000d76fu57og65ns8g8ij80.mp4","v12044gd0000d770fkvog65sm7r0pipg.mp4","v12044gd0000d7m2covog65vtfdpagj0.mp4","v14025g50000d6frgq7og65k934hlmig.mp4","v14044g50000d6nudbvog65u2jm9bri0.mp4","v14044g50000d77aaonog65mq147659g.mp4","v15044gf0000d0h7dkfog65vv7kuou30.mp4","v15044gf0000d4og8qvog65mbfq49f0g.mp4","v15044gf0000d6bhd5fog65pc4egcqa0.mp4","v15044gf0000d6bkl87og65iblkiuifg.mp4","v15044gf0000d6n4i2nog65oqv2qordg.mp4","v15044gf0000d70cbfvog65hton34ks0.mp4","v15044gf0000d7109knog65ubiklv2e0.mp4","v15044gf0000d7717f7og65r5otkn43g.mp4","v15044gf0000d77bjkvog65mqnldlru0.mp4","v15044gf0000d78onavog65ke21eir7g.mp4","v15044gf0000d7b2os7og65oc5alue9g.mp4","v15044gf0000d7e32nvog65m07a4esqg.mp4","v15044gf0000d7gp24vog65on5l654bg.mp4","v1c025g50000cukc6mfog65nlsf49ls0.mp4","v1c044g50000d43218fog65gf2b8h3cg.mp4","v1c044g50000d6amnafog65kc9gullg0.mp4","v1c044g50000d6c6o77og65i7c3kuo6g.mp4","v1c044g50000d7af7pfog65oj28h6lvg.mp4","v24044gl0000cts166nog65r0o9iv0kg.mp4","v24044gl0000d40v71nog65jdkulbl10.mp4","v24044gl0000d51cab7og65io8o6bpbg.mp4","v24044gl0000d5hcrevog65mfj4nhuh0.mp4","v24044gl0000d5vpvvnog65rlf83qkp0.mp4","v24044gl0000d6jjfcfog65vk0s3rrig.mp4","v24044gl0000d6ldtovog65meeb06a00.mp4","v24044gl0000d6u7vq7og65k2d46mki0.mp4","v24044gl0000d70tfmvog65l1gmf6df0.mp4","v24044gl0000d72t8rfog65pnn9lkdqg.mp4","v24044gl0000d7a1g87og65o7bhsbkig.mp4","v24044gl0000d7bndevog65o0jhpmhpg.mp4","v24044gl0000d7frk7vog65m02eodrs0.mp4","v24044gl0000d7igkmfog65visfeobe0.mp4","v24044gl0000d7j78tvog65gabi678dg.mp4","v24044gl0000d7j8nkfog65gp7jit940.mp4","v24044gl0000d7kf20nog65m9vh58390.mp4","v24044gl0000d7kuep7og65ufhbkuu80.mp4","v26044gc0000d6vrvlvog65p6p09doeg.mp4","v26044gc0000d7aolsfog65n5u4i8u10.mp4","v26044gc0000d7aouinog65l767v7780.mp4","v26044gc0000d7n4lb7og65g1sbp3peg.mp4"];
 
-// Populate references gallery from real files
-(function buildRefsGrid() {
-  const grid = document.getElementById('refs-grid');
+// Populate references gallery — separate grids for World and Algo
+function renderRefsGrid(gridId, files, kind) {
+  const grid = document.getElementById(gridId);
   if (!grid) return;
   const ratios = ['r-tall', 'r-square', 'r-landscape', 'r-portrait', 'r-square', 'r-tall', 'r-landscape', 'r-portrait'];
-  const items = [];
-  const max = Math.max(REFS_ALGO.length, REFS_WORLD.length);
-  for (let i = 0; i < max; i++) {
-    if (REFS_WORLD[i]) items.push({ kind: 'world', file: REFS_WORLD[i] });
-    if (REFS_ALGO[i]) items.push({ kind: 'algo', file: REFS_ALGO[i] });
-  }
-  items.forEach((item, idx) => {
+  const label = kind === 'algo' ? 'Algo' : 'World';
+  files.forEach((file, idx) => {
     const ratio = ratios[idx % ratios.length];
-    const path = `references/${item.kind}/${encodeURI(item.file)}`;
-    const ext = item.file.split('.').pop().toLowerCase();
+    const path = `references/${kind}/${encodeURI(file)}`;
+    const ext = file.split('.').pop().toLowerCase();
     const isVideo = ['mp4', 'webm', 'mov'].includes(ext);
     const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
-    const label = item.kind === 'algo' ? 'Algo' : 'World';
     const num = String(idx + 1).padStart(2, '0');
     const card = document.createElement('a');
     card.className = 'card';
@@ -923,25 +959,24 @@ const REFS_WORLD = ["ssstik.io_@asilcinematicfilmes_1777454353695.mp4","ssstik.i
     card.rel = 'noopener';
     let media = '';
     if (isVideo) {
-      media = `<video src="${path}" autoplay muted loop playsinline webkit-playsinline preload="auto" controls style="width:100%;height:100%;object-fit:cover;display:block;background:#000"></video>`;
+      media = `<video src="${path}" autoplay muted loop playsinline webkit-playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;background:#000"></video>`;
     } else if (isImage) {
       media = `<img src="${path}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block;background:#000">`;
-    } else {
-      media = `<div style="padding:20px;color:#666;font-size:12px">${item.file}</div>`;
     }
     card.innerHTML = `
       <div class="card-img ${ratio}" style="background:#1a1a18">${media}</div>
       <div class="card-meta mono"><strong>${label}</strong><span>${num}</span></div>
     `;
     grid.appendChild(card);
-    // Try to play videos as soon as they're in DOM
     const v = card.querySelector('video');
     if (v) {
       v.addEventListener('loadeddata', () => v.play().catch(() => {}));
       setTimeout(() => v.play().catch(() => {}), 200);
     }
   });
-})();
+}
+renderRefsGrid('refs-world', REFS_WORLD, 'world');
+renderRefsGrid('refs-algo', REFS_ALGO, 'algo');
 
 (function () {
   const cards = document.querySelectorAll('.card[data-url]');
