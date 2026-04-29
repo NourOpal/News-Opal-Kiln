@@ -998,7 +998,9 @@ function renderRefsGrid(gridId, files, kind) {
     card.rel = 'noopener';
     let media = '';
     if (isVideo) {
-      media = `<video src="${path}" autoplay muted loop playsinline webkit-playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;background:#000"></video>`;
+      const baseName = file.replace(/\.(mp4|webm|mov)$/i, '');
+      const poster = `references/world-thumbs/${encodeURI(baseName)}.jpg`;
+      media = `<video src="${path}" poster="${poster}" autoplay muted loop playsinline webkit-playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;background:#000"></video>`;
     } else if (isImage) {
       media = `<img src="${path}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block;background:#000">`;
     }
