@@ -342,18 +342,11 @@
   <p class="sec-blurb">Drop video files into <code>/references/algo/</code> and <code>/references/world/</code> — they auto-render below. Or replace these placeholders with TikTok / IG / Vimeo URLs and they embed.</p>
 
   <div class="ref-help">
-    <strong>How to fill this:</strong> drop <code>.mp4</code> or <code>.gif</code> files into <code>references/algo/</code> for the algorithm-side references, and <code>references/world/</code> for the hopecore / nature / human-scale references. They'll render here automatically as a masonry gallery (named files preserved as titles). Or paste links and let me know — I'll wire embeds.
+    <strong>To fill this:</strong> drop <code>.mp4</code>, <code>.webm</code> or <code>.gif</code> files into <code>references/algo/</code> (named <code>01.mp4</code>, <code>02.mp4</code>… up to <code>20.mp4</code>) and <code>references/world/</code> the same way. They auto-render as videos when present. Empty slots stay as placeholders.
   </div>
 
-  <div class="masonry">
-    <div class="card"><div class="card-img r-tall"><div class="card-img-fallback"><div><small>Algo / drop slot</small>references/algo/01.mp4</div></div></div><div class="card-meta mono"><strong>Algo</strong><span>01</span></div></div>
-    <div class="card"><div class="card-img r-square"><div class="card-img-fallback"><div><small>World / drop slot</small>references/world/01.mp4</div></div></div><div class="card-meta mono"><strong>World</strong><span>01</span></div></div>
-    <div class="card"><div class="card-img r-landscape"><div class="card-img-fallback"><div><small>Algo / drop slot</small>references/algo/02.mp4</div></div></div><div class="card-meta mono"><strong>Algo</strong><span>02</span></div></div>
-    <div class="card"><div class="card-img r-tall"><div class="card-img-fallback"><div><small>World / drop slot</small>references/world/02.mp4</div></div></div><div class="card-meta mono"><strong>World</strong><span>02</span></div></div>
-    <div class="card"><div class="card-img r-square"><div class="card-img-fallback"><div><small>Algo / drop slot</small>references/algo/03.mp4</div></div></div><div class="card-meta mono"><strong>Algo</strong><span>03</span></div></div>
-    <div class="card"><div class="card-img r-portrait"><div class="card-img-fallback"><div><small>World / drop slot</small>references/world/03.mp4</div></div></div><div class="card-meta mono"><strong>World</strong><span>03</span></div></div>
-    <div class="card"><div class="card-img r-landscape"><div class="card-img-fallback"><div><small>Algo / drop slot</small>references/algo/04.mp4</div></div></div><div class="card-meta mono"><strong>Algo</strong><span>04</span></div></div>
-    <div class="card"><div class="card-img r-tall"><div class="card-img-fallback"><div><small>World / drop slot</small>references/world/04.mp4</div></div></div><div class="card-meta mono"><strong>World</strong><span>04</span></div></div>
+  <div class="masonry" id="refs-grid">
+    <!-- JS populates 20 algo + 20 world slots; missing files stay as placeholders -->
   </div>
 </section>
 
@@ -663,6 +656,63 @@ const OG_MAP = {
 };
 
 const fallbackImg = (url) => `https://image.thum.io/get/width/1200/maxAge/720/noanimate/${encodeURIComponent(url)}`;
+
+// Populate references gallery (20 algo + 20 world slots, alternating)
+(function buildRefsGrid() {
+  const grid = document.getElementById('refs-grid');
+  if (!grid) return;
+  const ratios = ['r-tall', 'r-square', 'r-landscape', 'r-portrait', 'r-square', 'r-landscape', 'r-tall', 'r-portrait'];
+  const slots = [];
+  for (let i = 1; i <= 20; i++) {
+    slots.push({ kind: 'algo', n: i });
+    slots.push({ kind: 'world', n: i });
+  }
+  slots.forEach((slot, idx) => {
+    const num = String(slot.n).padStart(2, '0');
+    const ratio = ratios[idx % ratios.length];
+    const path = `references/${slot.kind}/${num}`;
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-img ${ratio}" data-ref="${path}">
+        <div class="card-img-fallback"><div><small>${slot.kind} / drop slot</small>${path}.mp4</div></div>
+      </div>
+      <div class="card-meta mono"><strong>${slot.kind === 'algo' ? 'Algo' : 'World'}</strong><span>${num}</span></div>
+    `;
+    grid.appendChild(card);
+    // Probe for video file
+    const wrap = card.querySelector('.card-img');
+    const tryExt = (exts) => {
+      if (exts.length === 0) return;
+      const ext = exts[0];
+      const url = `${path}.${ext}`;
+      if (ext === 'gif') {
+        const img = new Image();
+        img.onload = () => {
+          const el = document.createElement('img');
+          el.src = url; el.loading = 'lazy';
+          el.style.opacity = 0;
+          el.onload = () => { el.style.opacity = 1; wrap.querySelector('.card-img-fallback')?.remove(); };
+          wrap.appendChild(el);
+        };
+        img.onerror = () => tryExt(exts.slice(1));
+        img.src = url;
+      } else {
+        fetch(url, { method: 'HEAD' }).then(r => {
+          if (r.ok) {
+            const v = document.createElement('video');
+            v.src = url; v.autoplay = true; v.muted = true; v.loop = true; v.playsInline = true;
+            v.style.width = '100%'; v.style.height = '100%'; v.style.objectFit = 'cover';
+            v.style.opacity = 0; v.style.transition = 'opacity 0.4s ease';
+            v.onloadeddata = () => { v.style.opacity = 1; wrap.querySelector('.card-img-fallback')?.remove(); };
+            wrap.appendChild(v);
+          } else { tryExt(exts.slice(1)); }
+        }).catch(() => tryExt(exts.slice(1)));
+      }
+    };
+    tryExt(['mp4', 'webm', 'gif']);
+  });
+})();
 
 (function () {
   const cards = document.querySelectorAll('.card[data-url]');
