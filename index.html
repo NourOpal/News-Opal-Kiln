@@ -531,7 +531,7 @@
 <section class="sec" id="refs">
   <div class="sec-bar">
     <div><span class="sec-label mono">00 / Reference gallery</span></div>
-    <div class="sec-count mono">For drop-in</div>
+    <div class="sec-count mono">80 references</div>
   </div>
   <h2 class="sec-title">Saved film references — algo + world.</h2>
   <p class="sec-blurb">Algo-side references (left tone, glitchy, screen-grabs of the news threads + AI dystopia) and world-side references (cinematic / hopecore / nature / contemplative) auto-loaded from the GitHub repo.</p>
@@ -887,11 +887,10 @@ const OG_MAP = {
   "https://www.theregister.com/2026/04/23/anthropic_says_it_has_fixed/": "img/4828b751.jpg"
 };
 
-// Multi-stage fallback: og:image scrape → screenshot → bigger screenshot
+// Microlink redirects to the actual og:image of the page (free, paywall-immune)
 const fallbackChain = (url) => [
-  `https://image.thum.io/get/og/maxAge/720/${url}`,
-  `https://image.thum.io/get/width/1200/maxAge/720/noanimate/${url}`,
-  `https://api.microlink.io/?url=${encodeURIComponent(url)}&embed=image.url`
+  `https://api.microlink.io/?url=${encodeURIComponent(url)}&embed=image.url`,
+  `https://api.microlink.io/?url=${encodeURIComponent(url)}&embed=screenshot.url&screenshot=true`
 ];
 
 // Reference files actually present in references/algo and references/world
@@ -903,58 +902,44 @@ const REFS_WORLD = ["ssstik.io_@asilcinematicfilmes_1777454353695.mp4","ssstik.i
   const grid = document.getElementById('refs-grid');
   if (!grid) return;
   const ratios = ['r-tall', 'r-square', 'r-landscape', 'r-portrait', 'r-square', 'r-tall', 'r-landscape', 'r-portrait'];
-  // Interleave algo + world so they're side by side in the masonry
   const items = [];
   const max = Math.max(REFS_ALGO.length, REFS_WORLD.length);
   for (let i = 0; i < max; i++) {
     if (REFS_WORLD[i]) items.push({ kind: 'world', file: REFS_WORLD[i] });
     if (REFS_ALGO[i]) items.push({ kind: 'algo', file: REFS_ALGO[i] });
   }
-  // Lazy-load observer: spawn img/video only when card scrolls near viewport
-  const refsObs = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      const wrap = e.target;
-      refsObs.unobserve(wrap);
-      const path = wrap.dataset.path;
-      const kind = wrap.dataset.kind;
-      if (kind === 'video') {
-        const v = document.createElement('video');
-        v.src = path;
-        v.autoplay = true; v.muted = true; v.loop = true; v.playsInline = true;
-        v.preload = 'auto';
-        v.setAttribute('playsinline', '');
-        v.setAttribute('webkit-playsinline', '');
-        v.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
-        v.onloadeddata = () => v.play().catch(() => {});
-        wrap.appendChild(v);
-        // Try to play after a brief delay too (autoplay race conditions)
-        setTimeout(() => v.play().catch(() => {}), 100);
-      } else if (kind === 'image') {
-        const i = document.createElement('img');
-        i.src = path; i.loading = 'lazy'; i.alt = '';
-        i.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
-        wrap.appendChild(i);
-      }
-    });
-  }, { rootMargin: '300px 0px' });
-
   items.forEach((item, idx) => {
     const ratio = ratios[idx % ratios.length];
     const path = `references/${item.kind}/${encodeURI(item.file)}`;
     const ext = item.file.split('.').pop().toLowerCase();
     const isVideo = ['mp4', 'webm', 'mov'].includes(ext);
     const isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext);
-    const card = document.createElement('div');
-    card.className = 'card';
     const label = item.kind === 'algo' ? 'Algo' : 'World';
     const num = String(idx + 1).padStart(2, '0');
+    const card = document.createElement('a');
+    card.className = 'card';
+    card.href = path;
+    card.target = '_blank';
+    card.rel = 'noopener';
+    let media = '';
+    if (isVideo) {
+      media = `<video src="${path}" autoplay muted loop playsinline webkit-playsinline preload="auto" controls style="width:100%;height:100%;object-fit:cover;display:block;background:#000"></video>`;
+    } else if (isImage) {
+      media = `<img src="${path}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block;background:#000">`;
+    } else {
+      media = `<div style="padding:20px;color:#666;font-size:12px">${item.file}</div>`;
+    }
     card.innerHTML = `
-      <div class="card-img ${ratio}" style="background:#1a1a18" data-path="${path}" data-kind="${isVideo ? 'video' : 'image'}"></div>
+      <div class="card-img ${ratio}" style="background:#1a1a18">${media}</div>
       <div class="card-meta mono"><strong>${label}</strong><span>${num}</span></div>
     `;
     grid.appendChild(card);
-    refsObs.observe(card.querySelector('.card-img'));
+    // Try to play videos as soon as they're in DOM
+    const v = card.querySelector('video');
+    if (v) {
+      v.addEventListener('loadeddata', () => v.play().catch(() => {}));
+      setTimeout(() => v.play().catch(() => {}), 200);
+    }
   });
 })();
 
