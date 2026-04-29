@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The State of Things — Apr 29 2026</title>
 <meta name="description" content="Brand film research for Kiln. The bad sides of tech, algorithms, attention and self-image in spring 2026.">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/favicon.png">
 <style>
   :root {
     --bg: #f4f3ef;
@@ -368,18 +370,15 @@
   .resource-img img { width: 100%; height: 100%; object-fit: cover; }
 
   /* PART DIVIDER */
-  body { overflow-x: hidden; }
   .part-divider {
-    padding: 80px 56px 56px;
-    margin: 56px calc(50% - 50vw) 16px;
+    padding: 64px 40px 48px;
+    margin: 56px 0 16px;
     background: var(--ink);
     color: var(--bg);
-    border-radius: 0;
-    width: 100vw;
-    max-width: 100vw;
+    border-radius: 12px;
   }
   @media (max-width: 780px) {
-    .part-divider { padding: 56px 20px 40px; }
+    .part-divider { padding: 48px 24px 36px; margin: 40px 0 12px; }
   }
   .part-num {
     color: rgba(244,243,239,0.6);
@@ -535,11 +534,7 @@
     <div class="sec-count mono">For drop-in</div>
   </div>
   <h2 class="sec-title">Saved film references — algo + world.</h2>
-  <p class="sec-blurb">Drop video files into <code>/references/algo/</code> and <code>/references/world/</code> — they auto-render below. Or replace these placeholders with TikTok / IG / Vimeo URLs and they embed.</p>
-
-  <div class="ref-help">
-    <strong>To fill this:</strong> drop <code>.mp4</code>, <code>.webm</code> or <code>.gif</code> files into <code>references/algo/</code> (named <code>01.mp4</code>, <code>02.mp4</code>… up to <code>20.mp4</code>) and <code>references/world/</code> the same way. They auto-render as videos when present. Empty slots stay as placeholders.
-  </div>
+  <p class="sec-blurb">Algo-side references (left tone, glitchy, screen-grabs of the news threads + AI dystopia) and world-side references (cinematic / hopecore / nature / contemplative) auto-loaded from the GitHub repo.</p>
 
   <div class="masonry" id="refs-grid">
     <!-- JS populates 20 algo + 20 world slots; missing files stay as placeholders -->
@@ -892,7 +887,12 @@ const OG_MAP = {
   "https://www.theregister.com/2026/04/23/anthropic_says_it_has_fixed/": "img/4828b751.jpg"
 };
 
-const fallbackImg = (url) => `https://image.thum.io/get/width/1200/maxAge/720/noanimate/${encodeURIComponent(url)}`;
+// Multi-stage fallback: og:image scrape → screenshot → bigger screenshot
+const fallbackChain = (url) => [
+  `https://image.thum.io/get/og/maxAge/720/${url}`,
+  `https://image.thum.io/get/width/1200/maxAge/720/noanimate/${url}`,
+  `https://api.microlink.io/?url=${encodeURIComponent(url)}&embed=image.url`
+];
 
 // Reference files actually present in references/algo and references/world
 const REFS_ALGO = ["0032419eec343a3f271cac56a659c3fc.jpg","1a0af1fbbeb48e64dea2355ee6fab67a.jpg","261702704636.webp","261703028230.webp","261703451442.webp","261706250091.webp","261706250650.webp","261706251990.webp","2942f9143034d4e7241aad62d0d9bf20.jpg","392bbdf2-b1ff-4266-8936-693a6e799f20.jpeg","55320e57eaaa7bf6dd467831e4d6bebb.jpg","72ebca3d-4144-44d3-b367-a32dc499039f.jpeg","IMG_1137.PNG","IMG_1138.PNG","IMG_1139.PNG","IMG_1140.PNG","IMG_1141.PNG","fa8a70228666df56ee3a395517d8f1c9.jpg"];
@@ -945,7 +945,7 @@ const REFS_WORLD = ["ssstik.io_@asilcinematicfilmes_1777454353695.mp4","ssstik.i
       const wrap = card.querySelector('.card-img');
       const fb = wrap.querySelector('.card-img-fallback');
       const og = OG_MAP[url];
-      const sources = og ? [og, fallbackImg(url)] : [fallbackImg(url)];
+      const sources = og ? [og, ...fallbackChain(url)] : fallbackChain(url);
       const tryNext = (i) => {
         if (i >= sources.length) return;
         const img = document.createElement('img');
