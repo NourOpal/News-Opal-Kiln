@@ -220,10 +220,10 @@ block = f'''<!-- BEGIN AUTO-GENERATED LAUNCH VIDEO -->
   <h2 class="sec-title">Half 1, the winners.</h2>
   <p class="sec-blurb"><strong>B-roll for "they work at superhuman speed, make money in their sleep, learn faster, time again."</strong> Fast patchwork, tasteful, not chaotic.</p>
   <div style="background:#fff;border-radius:8px;padding:20px 24px;margin-bottom:24px;max-width:780px;font-size:13.5px;line-height:1.55;color:#1a1a1a">
-    <div class="mono" style="color:#888;margin-bottom:10px">Editing direction for Webster</div>
-    <p style="margin-bottom:10px"><strong>Highlight one specific number or phrase per card</strong>, not the whole tweet. Examples: "$4,200 in one weekend", "raised $1 million", "$1.8 billion company", "shipped in a weekend". The eye lands on the highlighted line, then we cut.</p>
-    <p style="margin-bottom:10px"><strong>How to highlight:</strong> yellow marker stripe on top of the line, or a fast zoom into the line. Either works. It's digital so the text will still read clearly. Half a second to one second on screen.</p>
-    <p style="margin-bottom:0"><strong>For cards with video:</strong> show the tweet screenshot then cut into the video, or layer the video inside a smaller window on top of the tweet. Mix it up across cards so it doesn't repeat. Examples for inspiration in the Algo folder below.</p>
+    <div class="mono" style="color:#888;margin-bottom:10px">Editing direction</div>
+    <p style="margin-bottom:8px"><strong>Highlight one number or phrase per card.</strong> "$4,200 in one weekend", "raised $1 million", "$1.8 billion company".</p>
+    <p style="margin-bottom:8px"><strong>How:</strong> highlight however reads best (underline, box, zoom, dim the rest). 0.5 to 1 second, then cut.</p>
+    <p style="margin-bottom:0"><strong>Cards with video:</strong> show the tweet, cut into the video, or layer the video over the tweet. Mix it up. See Algo folder for inspo.</p>
   </div>
   <div class="masonry">
 {winners_html}
@@ -235,10 +235,10 @@ block = f'''<!-- BEGIN AUTO-GENERATED LAUNCH VIDEO -->
   <h2 class="sec-title">Half 2, the used.</h2>
   <p class="sec-blurb"><strong>B-roll for "tired, behind, distracted, scrolling through someone else's life on a phone or a terminal window they can't put down."</strong> Fast patchwork, tasteful, not chaotic.</p>
   <div style="background:#fff;border-radius:8px;padding:20px 24px;margin-bottom:24px;max-width:780px;font-size:13.5px;line-height:1.55;color:#1a1a1a">
-    <div class="mono" style="color:#888;margin-bottom:10px">Editing direction for Webster</div>
-    <p style="margin-bottom:10px"><strong>Highlight one specific phrase per article</strong>, not the whole article. Examples: "today's teenagers are sleeping less than ever", "birth rates falling everywhere all at once", "Jury finds Meta and Google negligent", "social media addiction lawsuit". Yellow marker stripe on top of the line, or a fast zoom. Half a second to one second, then cut.</p>
-    <p style="margin-bottom:10px"><strong>Stack the visuals:</strong> bed-scroll video plays underneath while article headlines fade in and out over it. Terminal cluster as a quick montage, five terminal screens in 1.5 seconds. Meta verdict image with the highlighted line stays briefly, then cut.</p>
-    <p style="margin-bottom:0"><strong>Pacing inspiration:</strong> the Algo folder below has 3 reference videos Nour pulled showing the tone and patchwork rhythm this section should land at. Watch them first, pull clips from them as b-roll too.</p>
+    <div class="mono" style="color:#888;margin-bottom:10px">Editing direction</div>
+    <p style="margin-bottom:8px"><strong>Highlight one phrase per article.</strong> "today's teenagers are sleeping less than ever", "birth rates falling everywhere all at once", "Jury finds Meta and Google negligent".</p>
+    <p style="margin-bottom:8px"><strong>How:</strong> highlight however reads best (underline, box, zoom, dim the rest). 0.5 to 1 second, then cut.</p>
+    <p style="margin-bottom:0"><strong>Stack:</strong> bed-scroll video underneath, article headlines fading over it. Terminal montage, five screens fast. Cut.</p>
   </div>
   <div class="masonry">
 {used_html}

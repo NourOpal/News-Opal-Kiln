@@ -50,15 +50,16 @@
     border-bottom: 1px solid var(--line);
   }
   .topbar-inner {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 24px;
-    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    flex-wrap: nowrap;
+    min-width: 0;
   }
-  .topbar .left, .topbar .right { display: flex; gap: 20px; align-items: center; color: var(--muted); }
-  .topbar .right { justify-content: flex-end; }
-  .topbar .center { color: var(--ink); }
+  .topbar .left, .topbar .right { color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+  .topbar .center { color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
   .live { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
   .live::before {
     content: ''; width: 6px; height: 6px;
@@ -525,7 +526,7 @@
 <section class="sec" id="pace">
   <div class="sec-bar"><span class="sec-label mono">A.2 / Pace reference</span><span class="sec-count mono">Editing inspo</span></div>
   <h2 class="sec-title">The editing, fast patchwork tastefully done.</h2>
-  <p class="sec-blurb">Kenneth's two beats ("they work at superhuman speed…" and "tired, behind, distracted…") move quickly. Fast patchwork, screens cutting over screens, wins and doomscroll moments stacking in quick succession. Below are reference clips for the tone and rhythm we want Webster to match.</p>
+  <p class="sec-blurb">Kenneth's two beats ("they work at superhuman speed…" and "tired, behind, distracted…") move quickly. Fast patchwork, screens cutting over screens, wins and doomscroll moments stacking in quick succession. Reference clips below for the tone and rhythm.</p>
   <div class="masonry" style="margin-top:8px">
     <div class="card">
       <a href="editing-ref/video.mp4" target="_blank" rel="noopener"><div class="card-img r-landscape" style="position:relative;background:#000"><img src="editing-ref/poster.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div></a>
@@ -556,10 +557,10 @@
   <h2 class="sec-title">Half 1, the winners.</h2>
   <p class="sec-blurb"><strong>B-roll for "they work at superhuman speed, make money in their sleep, learn faster, time again."</strong> Fast patchwork, tasteful, not chaotic.</p>
   <div style="background:#fff;border-radius:8px;padding:20px 24px;margin-bottom:24px;max-width:780px;font-size:13.5px;line-height:1.55;color:#1a1a1a">
-    <div class="mono" style="color:#888;margin-bottom:10px">Editing direction for Webster</div>
-    <p style="margin-bottom:10px"><strong>Highlight one specific number or phrase per card</strong>, not the whole tweet. Examples: "$4,200 in one weekend", "raised $1 million", "$1.8 billion company", "shipped in a weekend". The eye lands on the highlighted line, then we cut.</p>
-    <p style="margin-bottom:10px"><strong>How to highlight:</strong> yellow marker stripe on top of the line, or a fast zoom into the line. Either works. It's digital so the text will still read clearly. Half a second to one second on screen.</p>
-    <p style="margin-bottom:0"><strong>For cards with video:</strong> show the tweet screenshot then cut into the video, or layer the video inside a smaller window on top of the tweet. Mix it up across cards so it doesn't repeat. Examples for inspiration in the Algo folder below.</p>
+    <div class="mono" style="color:#888;margin-bottom:10px">Editing direction</div>
+    <p style="margin-bottom:8px"><strong>Highlight one number or phrase per card.</strong> "$4,200 in one weekend", "raised $1 million", "$1.8 billion company".</p>
+    <p style="margin-bottom:8px"><strong>How:</strong> highlight however reads best (underline, box, zoom, dim the rest). 0.5 to 1 second, then cut.</p>
+    <p style="margin-bottom:0"><strong>Cards with video:</strong> show the tweet, cut into the video, or layer the video over the tweet. Mix it up. See Algo folder for inspo.</p>
   </div>
   <div class="masonry">
 <div class="card"><a href="X/Good%20side/1.8%20Billion%20Company/Screenshot%202026-05-18%20at%2019.58.56.png" target="_blank" rel="noopener"><div class="card-img r-tall" style="position:relative;background:#1a1a18"><img src="X/Good%20side/1.8%20Billion%20Company/Screenshot%202026-05-18%20at%2019.58.56.png" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div></a><div class="card-meta mono"><strong>1.8 Billion Company</strong><span>01</span></div><div class="card-btns"><a href="X/Good%20side/1.8%20Billion%20Company/How%20A.I.%20Helped%20One%20Man%20%28and%20His%20Brother%29%20Build%20a%20%241.8%20Billion%20Company%20-%20The%20New%20York%20Times.pdf" target="_blank" rel="noopener" class="card-btn">↗ Source</a></div></div>
@@ -576,10 +577,10 @@
   <h2 class="sec-title">Half 2, the used.</h2>
   <p class="sec-blurb"><strong>B-roll for "tired, behind, distracted, scrolling through someone else's life on a phone or a terminal window they can't put down."</strong> Fast patchwork, tasteful, not chaotic.</p>
   <div style="background:#fff;border-radius:8px;padding:20px 24px;margin-bottom:24px;max-width:780px;font-size:13.5px;line-height:1.55;color:#1a1a1a">
-    <div class="mono" style="color:#888;margin-bottom:10px">Editing direction for Webster</div>
-    <p style="margin-bottom:10px"><strong>Highlight one specific phrase per article</strong>, not the whole article. Examples: "today's teenagers are sleeping less than ever", "birth rates falling everywhere all at once", "Jury finds Meta and Google negligent", "social media addiction lawsuit". Yellow marker stripe on top of the line, or a fast zoom. Half a second to one second, then cut.</p>
-    <p style="margin-bottom:10px"><strong>Stack the visuals:</strong> bed-scroll video plays underneath while article headlines fade in and out over it. Terminal cluster as a quick montage, five terminal screens in 1.5 seconds. Meta verdict image with the highlighted line stays briefly, then cut.</p>
-    <p style="margin-bottom:0"><strong>Pacing inspiration:</strong> the Algo folder below has 3 reference videos Nour pulled showing the tone and patchwork rhythm this section should land at. Watch them first, pull clips from them as b-roll too.</p>
+    <div class="mono" style="color:#888;margin-bottom:10px">Editing direction</div>
+    <p style="margin-bottom:8px"><strong>Highlight one phrase per article.</strong> "today's teenagers are sleeping less than ever", "birth rates falling everywhere all at once", "Jury finds Meta and Google negligent".</p>
+    <p style="margin-bottom:8px"><strong>How:</strong> highlight however reads best (underline, box, zoom, dim the rest). 0.5 to 1 second, then cut.</p>
+    <p style="margin-bottom:0"><strong>Stack:</strong> bed-scroll video underneath, article headlines fading over it. Terminal montage, five screens fast. Cut.</p>
   </div>
   <div class="masonry">
 <div class="card"><a href="X-thumbs/Bad%20Side/Algo/Why%20does%20it%20already%20feel%20like%20a%20memory.jpg" target="_blank" rel="noopener"><div class="card-img r-tall" style="position:relative;background:#1a1a18"><img src="X-thumbs/Bad%20Side/Algo/Why%20does%20it%20already%20feel%20like%20a%20memory.jpg" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div></a><div class="card-meta mono"><strong>Algo</strong><span>01</span></div><div class="card-btns"><a href="X/Bad%20Side/Algo/Why%20does%20it%20already%20feel%20like%20a%20memory.mp4" target="_blank" rel="noopener" class="card-btn">▶ Video</a><a href="X/Bad%20Side/Algo/Why%20does%20it%20already%20feel%20like%20a%20memory.mp4" target="_blank" rel="noopener" class="card-btn">↗ Source</a></div></div>
