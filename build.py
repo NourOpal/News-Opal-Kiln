@@ -106,7 +106,6 @@ def render_card(c, idx):
     ratios = ['r-tall', 'r-portrait', 'r-square', 'r-landscape', 'r-tall', 'r-portrait', 'r-landscape', 'r-square']
     ratio = ratios[idx % len(ratios)]
     num = f'{idx+1:02d}'
-    href = c['link']
 
     # Pick the image: prefer screenshot, else video thumbnail
     img_src = c['image']
@@ -114,12 +113,36 @@ def render_card(c, idx):
         img_src = video_thumb_url(c['video'])
 
     img_html = f'<img src="{img_src}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block">' if img_src else ''
-    video_badge = ''
-    if c['video']:
-        video_badge = f'<a href="{c["video"]}" target="_blank" rel="noopener" style="position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.85);color:#fff;padding:6px 11px;border-radius:999px;font-family:monospace;font-size:10px;text-decoration:none;letter-spacing:0.08em;text-transform:uppercase">▶ video</a>'
     caption_html = f'<div style="margin-top:5px;font-size:12px;color:#666;line-height:1.4">{c["caption"]}</div>' if c['caption'] else ''
     sub_label = f'<span>{c["sub"] or num}</span>'
-    return f'''<a class="card" href="{href}" target="_blank" rel="noopener"><div class="card-img {ratio}" style="position:relative;background:#1a1a18">{img_html}{video_badge}</div><div class="card-meta mono"><strong>{c["label"]}</strong>{sub_label}</div>{caption_html}</a>'''
+
+    # Two explicit buttons: Video + Source (X/article)
+    buttons = []
+    if c['video']:
+        buttons.append(f'<a href="{c["video"]}" target="_blank" rel="noopener" class="card-btn">▶ Video</a>')
+    if c['link']:
+        # Detect source label from URL
+        link = c['link']
+        if 'x.com' in link or 'twitter.com' in link:
+            label = '𝕏 Tweet'
+        elif 'reddit.com' in link:
+            label = 'Reddit'
+        elif 'tiktok.com' in link:
+            label = 'TikTok'
+        elif 'apps.apple.com' in link:
+            label = 'App Store'
+        elif 'theguardian.com' in link:
+            label = 'Guardian'
+        elif 'nytimes.com' in link:
+            label = 'NYT'
+        else:
+            label = 'Source'
+        buttons.append(f'<a href="{link}" target="_blank" rel="noopener" class="card-btn">↗ {label}</a>')
+    btns_html = f'<div class="card-btns">{"".join(buttons)}</div>' if buttons else ''
+
+    # Card image opens the image full-size; buttons handle video + link
+    image_href = img_src or c['video'] or c['link'] or '#'
+    return f'''<div class="card"><a href="{image_href}" target="_blank" rel="noopener"><div class="card-img {ratio}" style="position:relative;background:#1a1a18">{img_html}</div></a><div class="card-meta mono"><strong>{c["label"]}</strong>{sub_label}</div>{caption_html}{btns_html}</div>'''
 
 
 winners = scan_side('X/Good side')
