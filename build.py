@@ -211,7 +211,7 @@ block = f'''<!-- BEGIN AUTO-GENERATED LAUNCH VIDEO -->
 <section class="sec" id="winners">
   <div class="sec-bar"><span class="sec-label mono">B / Winners</span><span class="sec-count mono">{len(winners)} refs</span></div>
   <h2 class="sec-title">Half 1 — the winners.</h2>
-  <p class="sec-blurb">B-roll for the "work at superhuman speed, make money in their sleep, learn faster, time again" beat. ~3 seconds total → patchwork-fast cuts.</p>
+  <p class="sec-blurb"><strong>B-roll for the "work at superhuman speed, make money in their sleep, learn faster, time again" beat.</strong> ~3 seconds total → patchwork-fast cuts. <strong>Editing direction:</strong> highlight specific revenue numbers and quote lines from the screenshots ("$4,200 in one weekend", "raised $1M", "$87K MRR in 17 days"); zoom into the line, then cut. For cards with video, show the tweet screenshot with the video playing inside (picture-in-picture or split frame). Mix it up — tweet → video → highlighted number → next.</p>
   <div class="masonry">
 {winners_html}
   </div>
@@ -220,7 +220,7 @@ block = f'''<!-- BEGIN AUTO-GENERATED LAUNCH VIDEO -->
 <section class="sec" id="used">
   <div class="sec-bar"><span class="sec-label mono">C / The Used</span><span class="sec-count mono">{len(used)} refs</span></div>
   <h2 class="sec-title">Half 2 — the used.</h2>
-  <p class="sec-blurb">B-roll for "tired, behind, distracted, scrolling through someone else's life on a phone or a terminal window they can't put down." ~3 seconds total → patchwork-fast cuts.</p>
+  <p class="sec-blurb"><strong>B-roll for "tired, behind, distracted, scrolling through someone else's life on a phone or a terminal window they can't put down."</strong> ~3 seconds total → patchwork-fast cuts. <strong>Editing direction:</strong> highlight specific lines and stats from articles (e.g. "today's teenagers are sleeping less than ever", birth-rate fall, screen-time numbers) — zoom into the line, then cut. Stack a doomscroll video, a terminal screenshot, an article headline. Mix video clips with article highlights. Bed-scroll video plays under a stack of fading article quotes.</p>
   <div class="masonry">
 {used_html}
   </div>
