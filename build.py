@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Rebuild Launch Video sections from X/Good side and X/Bad Side folders."""
 
-import os, re, urllib.parse
+import os, re, urllib.parse  # noqa
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 os.chdir(ROOT)
@@ -38,6 +38,15 @@ def scan_named_folder(folder_path, base_url_path):
             try:
                 with open(os.path.join(folder_path, f)) as fh:
                     caption = fh.read().strip()
+            except: pass
+        elif low.endswith('.rtf'):
+            # Extract first URL from RTF (people drop links into Notes/TextEdit)
+            try:
+                with open(os.path.join(folder_path, f), 'rb') as fh:
+                    rtf = fh.read().decode('utf-8', errors='ignore')
+                m = re.search(r'https?://[^\s}\\"\']+', rtf)
+                if m and not link:
+                    link = m.group(0).rstrip('?,.;')
             except: pass
 
     cards = []
