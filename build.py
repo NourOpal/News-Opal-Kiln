@@ -216,7 +216,14 @@ block = f'''<!-- BEGIN AUTO-GENERATED LAUNCH VIDEO -->
 <section class="sec" id="winners">
   <div class="sec-bar"><span class="sec-label mono">B / Winners</span><span class="sec-count mono">{len(winners)} refs</span></div>
   <h2 class="sec-title">Half 1 — the winners.</h2>
-  <p class="sec-blurb"><strong>B-roll for the "work at superhuman speed, make money in their sleep, learn faster, time again" beat.</strong> ~3 seconds total → patchwork-fast cuts. <strong>Editing direction:</strong> highlight specific revenue numbers and quote lines from the screenshots ("$4,200 in one weekend", "raised $1M", "$87K MRR in 17 days"); zoom into the line, then cut. For cards with video, show the tweet screenshot with the video playing inside (picture-in-picture or split frame). Mix it up — tweet → video → highlighted number → next.</p>
+  <p class="sec-blurb"><strong>B-roll for "they work at superhuman speed, make money in their sleep, learn faster, time again."</strong> ~3 seconds total in the video → fast patchwork, but tasteful — no chaos.</p>
+  <div style="background:#fff;border-radius:8px;padding:20px 24px;margin-bottom:24px;max-width:780px;font-size:13.5px;line-height:1.55;color:#1a1a1a">
+    <div class="mono" style="color:#888;margin-bottom:10px">Editing direction for Webster</div>
+    <p style="margin-bottom:10px"><strong>Highlight ONE specific number/phrase per card</strong> — not the whole tweet. Examples: "$4,200 in one weekend" · "raised $1 million" · "$1.8 billion company" · "shipped in a weekend". The eye lands on a single highlighted line, then we cut.</p>
+    <p style="margin-bottom:10px"><strong>How to highlight:</strong> subtle yellow marker stripe under the line (not on top of it), or a quick zoom into the line with the rest of the tweet dimmed. Highlight on screen 0.5–1 second max. Don't yell with it.</p>
+    <p style="margin-bottom:10px"><strong>For cards with video:</strong> tweet screenshot stays as the frame, video plays in a smaller window inside it (picture-in-picture). Or split-screen: tweet on left, video on right. Don't replace the tweet — layer them.</p>
+    <p style="margin-bottom:0"><strong>Pace mix:</strong> tweet headline (highlighted) → video clip (1 sec) → article quote (highlighted) → next tweet. Stack them, fade between them. Never one full clip — always layered.</p>
+  </div>
   <div class="masonry">
 {winners_html}
   </div>
@@ -225,7 +232,13 @@ block = f'''<!-- BEGIN AUTO-GENERATED LAUNCH VIDEO -->
 <section class="sec" id="used">
   <div class="sec-bar"><span class="sec-label mono">C / The Used</span><span class="sec-count mono">{len(used)} refs</span></div>
   <h2 class="sec-title">Half 2 — the used.</h2>
-  <p class="sec-blurb"><strong>B-roll for "tired, behind, distracted, scrolling through someone else's life on a phone or a terminal window they can't put down."</strong> ~3 seconds total → patchwork-fast cuts. <strong>Editing direction:</strong> highlight specific lines and stats from articles (e.g. "today's teenagers are sleeping less than ever", birth-rate fall, screen-time numbers) — zoom into the line, then cut. Stack a doomscroll video, a terminal screenshot, an article headline. Mix video clips with article highlights. Bed-scroll video plays under a stack of fading article quotes.</p>
+  <p class="sec-blurb"><strong>B-roll for "tired, behind, distracted, scrolling through someone else's life on a phone or a terminal window they can't put down."</strong> ~3 seconds total in the video → fast patchwork, but tasteful — no chaos.</p>
+  <div style="background:#fff;border-radius:8px;padding:20px 24px;margin-bottom:24px;max-width:780px;font-size:13.5px;line-height:1.55;color:#1a1a1a">
+    <div class="mono" style="color:#888;margin-bottom:10px">Editing direction for Webster</div>
+    <p style="margin-bottom:10px"><strong>Highlight ONE specific phrase per article</strong> — not the whole article. Examples: "today's teenagers are sleeping less than ever" · "birth rates falling everywhere all at once" · "Jury finds Meta and Google negligent" · "social media addiction lawsuit". Subtle yellow marker stripe or quick zoom. Half a second to one second, then cut.</p>
+    <p style="margin-bottom:10px"><strong>Stack the visuals:</strong> bed-scroll video plays in the background while article headlines fade in and out over it. Terminal cluster as a quick montage — five terminal screens in 1.5 seconds. Meta verdict image with the highlighted line stays on screen briefly, then cut.</p>
+    <p style="margin-bottom:0"><strong>See the "Algo" folder below</strong> for editing-style inspiration — Nour added 3 reference videos showing exactly the kind of patchwork-but-tasteful pacing this section should land at. Pull clips from them as b-roll too.</p>
+  </div>
   <div class="masonry">
 {used_html}
   </div>
