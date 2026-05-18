@@ -69,16 +69,16 @@ def scan_named_folder(folder_path, base_url_path):
                 'caption': caption,
             })
     elif len(images) > 1 and not videos:
-        # Multi-image folder (Reddit posts, Terminal) — one card per image
-        for i, img in enumerate(images):
-            cards.append({
-                'label': name,
-                'sub': f'{i+1:02d}',
-                'image': f'{base_url_path}/{urllib.parse.quote(img)}',
-                'video': None,
-                'link': link or pdf_link or f'{base_url_path}/{urllib.parse.quote(img)}',
-                'caption': caption,
-            })
+        # Multi-image folder (Terminal etc.) — ONE clustered card with an internal grid
+        cards.append({
+            'label': name,
+            'sub': f'{len(images)} images',
+            'cluster': [f'{base_url_path}/{urllib.parse.quote(img)}' for img in images],
+            'image': f'{base_url_path}/{urllib.parse.quote(images[0])}',
+            'video': None,
+            'link': link or pdf_link or f'{base_url_path}/{urllib.parse.quote(images[0])}',
+            'caption': caption,
+        })
     elif images or videos:
         cards.append({
             'label': name,
@@ -122,12 +122,19 @@ def video_thumb_url(video_url):
 
 def render_card(c, idx):
     ratios = ['r-tall', 'r-portrait', 'r-square', 'r-landscape', 'r-tall', 'r-portrait', 'r-landscape', 'r-square']
-    # If this card is part of a clustered folder (sub label like "01", "02"...), use square so they group visually
-    if c.get('sub') and c['sub'].isdigit():
-        ratio = 'r-square'
-    else:
-        ratio = ratios[idx % len(ratios)]
+    ratio = ratios[idx % len(ratios)]
     num = f'{idx+1:02d}'
+
+    # CLUSTERED card: multiple images inside a single tile (Terminal etc.)
+    if c.get('cluster'):
+        cluster_thumbs = ''.join(
+            f'<a href="{u}" target="_blank" rel="noopener" style="display:block;aspect-ratio:1/1;overflow:hidden;background:#000;border-radius:2px"><img src="{u}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></a>'
+            for u in c['cluster']
+        )
+        n = len(c['cluster'])
+        col_count = min(n, 3)
+        sub_label = f'<span>{c["sub"]}</span>'
+        return f'''<div class="card cluster-card"><div style="display:grid;grid-template-columns:repeat({col_count},1fr);gap:4px;background:#1a1a18;padding:4px;border-radius:4px">{cluster_thumbs}</div><div class="card-meta mono" style="margin-top:10px"><strong>{c["label"]}</strong>{sub_label}</div></div>'''
 
     # Pick the image: prefer screenshot, else video thumbnail
     img_src = c['image']
