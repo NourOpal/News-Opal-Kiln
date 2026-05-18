@@ -134,7 +134,12 @@ def render_card(c, idx):
         n = len(c['cluster'])
         col_count = min(n, 3)
         sub_label = f'<span>{c["sub"]}</span>'
-        return f'''<div class="card cluster-card"><div style="display:grid;grid-template-columns:repeat({col_count},1fr);gap:4px;background:#1a1a18;padding:4px;border-radius:4px">{cluster_thumbs}</div><div class="card-meta mono" style="margin-top:10px"><strong>{c["label"]}</strong>{sub_label}</div></div>'''
+        # Per-image download buttons
+        dl_buttons = ''.join(
+            f'<a href="{u}" download class="card-btn">↓ {i+1:02d}</a>'
+            for i, u in enumerate(c['cluster'])
+        )
+        return f'''<div class="card cluster-card"><div style="display:grid;grid-template-columns:repeat({col_count},1fr);gap:4px;background:#1a1a18;padding:4px;border-radius:4px">{cluster_thumbs}</div><div class="card-meta mono" style="margin-top:10px"><strong>{c["label"]}</strong>{sub_label}</div><div class="card-btns">{dl_buttons}</div></div>'''
 
     # Pick the image: prefer screenshot, else video thumbnail
     img_src = c['image']
