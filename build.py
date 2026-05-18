@@ -122,7 +122,11 @@ def video_thumb_url(video_url):
 
 def render_card(c, idx):
     ratios = ['r-tall', 'r-portrait', 'r-square', 'r-landscape', 'r-tall', 'r-portrait', 'r-landscape', 'r-square']
-    ratio = ratios[idx % len(ratios)]
+    # If this card is part of a clustered folder (sub label like "01", "02"...), use square so they group visually
+    if c.get('sub') and c['sub'].isdigit():
+        ratio = 'r-square'
+    else:
+        ratio = ratios[idx % len(ratios)]
     num = f'{idx+1:02d}'
 
     # Pick the image: prefer screenshot, else video thumbnail
@@ -199,8 +203,8 @@ with open('index.html') as f:
 block = f'''<!-- BEGIN AUTO-GENERATED LAUNCH VIDEO -->
 <section class="sec" id="winners">
   <div class="sec-bar"><span class="sec-label mono">B / Winners</span><span class="sec-count mono">{len(winners)} refs</span></div>
-  <h2 class="sec-title">Half 1 — the people winning the AI era.</h2>
-  <p class="sec-blurb">B-roll for Kenneth's "they work at superhuman speed, make money in their sleep" beats. Indie hackers shipping, founders making real money, productivity wins. Each card links to the saved file or source URL.</p>
+  <h2 class="sec-title">Half 1 — the winners.</h2>
+  <p class="sec-blurb">B-roll for the "work at superhuman speed, make money in their sleep, learn faster, time again" beat. ~3 seconds total → patchwork-fast cuts.</p>
   <div class="masonry">
 {winners_html}
   </div>
@@ -208,8 +212,8 @@ block = f'''<!-- BEGIN AUTO-GENERATED LAUNCH VIDEO -->
 
 <section class="sec" id="used">
   <div class="sec-bar"><span class="sec-label mono">C / The Used</span><span class="sec-count mono">{len(used)} refs</span></div>
-  <h2 class="sec-title">Half 2 — the people being used by it.</h2>
-  <p class="sec-blurb">B-roll for "tired, behind, distracted, scrolling through someone else's life on a phone or a terminal window they can't put down." AI burnout, doomscroll exhaustion, sleep-deprivation studies, Reddit phone-overuse confessions, screen-time stats.</p>
+  <h2 class="sec-title">Half 2 — the used.</h2>
+  <p class="sec-blurb">B-roll for "tired, behind, distracted, scrolling through someone else's life on a phone or a terminal window they can't put down." ~3 seconds total → patchwork-fast cuts.</p>
   <div class="masonry">
 {used_html}
   </div>
