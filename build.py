@@ -78,17 +78,35 @@ def scan_side(side_dir):
     return cards
 
 
+def video_thumb_url(video_url):
+    """Map X/foo/bar/baz.mp4 → X-thumbs/foo/bar/baz.jpg (with URL-decoding then re-encoding)."""
+    if not video_url:
+        return None
+    decoded = urllib.parse.unquote(video_url)
+    if not decoded.startswith('X/'):
+        return None
+    rel = decoded[2:]  # strip X/
+    base = rel.rsplit('.', 1)[0]
+    candidate_path = os.path.join('X-thumbs', base + '.jpg')
+    if os.path.exists(candidate_path):
+        return 'X-thumbs/' + urllib.parse.quote(base + '.jpg')
+    return None
+
+
 def render_card(c, idx):
     ratios = ['r-tall', 'r-portrait', 'r-square', 'r-landscape', 'r-tall', 'r-portrait', 'r-landscape', 'r-square']
     ratio = ratios[idx % len(ratios)]
     num = f'{idx+1:02d}'
     href = c['link']
-    img_html = f'<img src="{c["image"]}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block">' if c['image'] else ''
+
+    # Pick the image: prefer screenshot, else video thumbnail
+    img_src = c['image']
+    if not img_src and c['video']:
+        img_src = video_thumb_url(c['video'])
+
+    img_html = f'<img src="{img_src}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block">' if img_src else ''
     video_badge = ''
     if c['video']:
-        if not c['image']:
-            # No image, just show video poster (browser-rendered first frame attempt)
-            img_html = f'<video src="{c["video"]}" muted playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;background:#000"></video>'
         video_badge = f'<a href="{c["video"]}" target="_blank" rel="noopener" style="position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.85);color:#fff;padding:6px 11px;border-radius:999px;font-family:monospace;font-size:10px;text-decoration:none;letter-spacing:0.08em;text-transform:uppercase">▶ video</a>'
     caption_html = f'<div style="margin-top:5px;font-size:12px;color:#666;line-height:1.4">{c["caption"]}</div>' if c['caption'] else ''
     sub_label = f'<span>{c["sub"] or num}</span>'
