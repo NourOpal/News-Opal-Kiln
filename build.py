@@ -49,16 +49,34 @@ def scan_named_folder(folder_path, base_url_path):
                     link = m.group(0).rstrip('?,.;')
             except: pass
 
+    # Find PDF as fallback source link
+    pdf_link = None
+    for f in os.listdir(folder_path):
+        if f.lower().endswith('.pdf'):
+            pdf_link = f'{base_url_path}/{urllib.parse.quote(f)}'
+            break
+
     cards = []
-    if len(images) > 1 and not videos:
-        # Treat each image as separate card (e.g. Reddit posts/1.png, 2.png...)
+    if len(videos) > 1:
+        # Multi-video folder (e.g. TikTok Videos) — one card per video
+        for i, vid in enumerate(videos):
+            cards.append({
+                'label': name,
+                'sub': f'{i+1:02d}',
+                'image': None,
+                'video': f'{base_url_path}/{urllib.parse.quote(vid)}',
+                'link': link or pdf_link or f'{base_url_path}/{urllib.parse.quote(vid)}',
+                'caption': caption,
+            })
+    elif len(images) > 1 and not videos:
+        # Multi-image folder (Reddit posts, Terminal) — one card per image
         for i, img in enumerate(images):
             cards.append({
                 'label': name,
                 'sub': f'{i+1:02d}',
                 'image': f'{base_url_path}/{urllib.parse.quote(img)}',
                 'video': None,
-                'link': link or f'{base_url_path}/{urllib.parse.quote(img)}',
+                'link': link or pdf_link or f'{base_url_path}/{urllib.parse.quote(img)}',
                 'caption': caption,
             })
     elif images or videos:
@@ -67,7 +85,7 @@ def scan_named_folder(folder_path, base_url_path):
             'sub': '',
             'image': f'{base_url_path}/{urllib.parse.quote(images[0])}' if images else None,
             'video': f'{base_url_path}/{urllib.parse.quote(videos[0])}' if videos else None,
-            'link': link or (f'{base_url_path}/{urllib.parse.quote(videos[0])}' if videos else f'{base_url_path}/{urllib.parse.quote(images[0])}' if images else '#'),
+            'link': link or pdf_link or (f'{base_url_path}/{urllib.parse.quote(videos[0])}' if videos else f'{base_url_path}/{urllib.parse.quote(images[0])}' if images else '#'),
             'caption': caption,
         })
     return cards
