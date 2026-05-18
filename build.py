@@ -127,19 +127,21 @@ def render_card(c, idx):
 
     # CLUSTERED card: multiple images inside a single tile (Terminal etc.)
     if c.get('cluster'):
+        urls_json = '[' + ','.join(f'"{u}"' for u in c['cluster']) + ']'
+        title_attr = c['label'].replace('"', '&quot;')
+        # Clicking any thumb opens the cluster lightbox showing all images + download buttons
         cluster_thumbs = ''.join(
-            f'<a href="{u}" target="_blank" rel="noopener" style="display:block;aspect-ratio:1/1;overflow:hidden;background:#000;border-radius:2px"><img src="{u}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></a>'
+            f'<div onclick="openCluster({urls_json}, &quot;{title_attr}&quot;)" style="cursor:pointer;aspect-ratio:1/1;overflow:hidden;background:#000;border-radius:2px"><img src="{u}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>'
             for u in c['cluster']
         )
         n = len(c['cluster'])
         col_count = min(n, 3)
         sub_label = f'<span>{c["sub"]}</span>'
-        # Per-image download buttons
         dl_buttons = ''.join(
             f'<a href="{u}" download class="card-btn">↓ {i+1:02d}</a>'
             for i, u in enumerate(c['cluster'])
         )
-        return f'''<div class="card cluster-card"><div style="display:grid;grid-template-columns:repeat({col_count},1fr);gap:4px;background:#1a1a18;padding:4px;border-radius:4px">{cluster_thumbs}</div><div class="card-meta mono" style="margin-top:10px"><strong>{c["label"]}</strong>{sub_label}</div><div class="card-btns">{dl_buttons}</div></div>'''
+        return f'''<div class="card cluster-card"><div onclick='openCluster({urls_json}, "{title_attr}")' style="cursor:pointer;display:grid;grid-template-columns:repeat({col_count},1fr);gap:4px;background:#1a1a18;padding:4px;border-radius:4px">{cluster_thumbs}</div><div class="card-meta mono" style="margin-top:10px"><strong>{c["label"]}</strong>{sub_label}</div><div class="card-btns"><a href="#" onclick='openCluster({urls_json}, "{title_attr}"); return false;' class="card-btn">⊞ Open all</a>{dl_buttons}</div></div>'''
 
     # Pick the image: prefer screenshot, else video thumbnail
     img_src = c['image']
@@ -215,14 +217,13 @@ with open('index.html') as f:
 block = f'''<!-- BEGIN AUTO-GENERATED LAUNCH VIDEO -->
 <section class="sec" id="winners">
   <div class="sec-bar"><span class="sec-label mono">B / Winners</span><span class="sec-count mono">{len(winners)} refs</span></div>
-  <h2 class="sec-title">Half 1 — the winners.</h2>
-  <p class="sec-blurb"><strong>B-roll for "they work at superhuman speed, make money in their sleep, learn faster, time again."</strong> ~3 seconds total in the video → fast patchwork, but tasteful — no chaos.</p>
+  <h2 class="sec-title">Half 1, the winners.</h2>
+  <p class="sec-blurb"><strong>B-roll for "they work at superhuman speed, make money in their sleep, learn faster, time again."</strong> Fast patchwork, tasteful, not chaotic.</p>
   <div style="background:#fff;border-radius:8px;padding:20px 24px;margin-bottom:24px;max-width:780px;font-size:13.5px;line-height:1.55;color:#1a1a1a">
     <div class="mono" style="color:#888;margin-bottom:10px">Editing direction for Webster</div>
-    <p style="margin-bottom:10px"><strong>Highlight ONE specific number/phrase per card</strong> — not the whole tweet. Examples: "$4,200 in one weekend" · "raised $1 million" · "$1.8 billion company" · "shipped in a weekend". The eye lands on a single highlighted line, then we cut.</p>
-    <p style="margin-bottom:10px"><strong>How to highlight:</strong> subtle yellow marker stripe under the line (not on top of it), or a quick zoom into the line with the rest of the tweet dimmed. Highlight on screen 0.5–1 second max. Don't yell with it.</p>
-    <p style="margin-bottom:10px"><strong>For cards with video:</strong> tweet screenshot stays as the frame, video plays in a smaller window inside it (picture-in-picture). Or split-screen: tweet on left, video on right. Don't replace the tweet — layer them.</p>
-    <p style="margin-bottom:0"><strong>Pace mix:</strong> tweet headline (highlighted) → video clip (1 sec) → article quote (highlighted) → next tweet. Stack them, fade between them. Never one full clip — always layered.</p>
+    <p style="margin-bottom:10px"><strong>Highlight one specific number or phrase per card</strong>, not the whole tweet. Examples: "$4,200 in one weekend", "raised $1 million", "$1.8 billion company", "shipped in a weekend". The eye lands on the highlighted line, then we cut.</p>
+    <p style="margin-bottom:10px"><strong>How to highlight:</strong> yellow marker stripe on top of the line, or a fast zoom into the line. Either works. It's digital so the text will still read clearly. Half a second to one second on screen.</p>
+    <p style="margin-bottom:0"><strong>For cards with video:</strong> show the tweet screenshot then cut into the video, or layer the video inside a smaller window on top of the tweet. Mix it up across cards so it doesn't repeat. Examples for inspiration in the Algo folder below.</p>
   </div>
   <div class="masonry">
 {winners_html}
@@ -231,13 +232,13 @@ block = f'''<!-- BEGIN AUTO-GENERATED LAUNCH VIDEO -->
 
 <section class="sec" id="used">
   <div class="sec-bar"><span class="sec-label mono">C / The Used</span><span class="sec-count mono">{len(used)} refs</span></div>
-  <h2 class="sec-title">Half 2 — the used.</h2>
-  <p class="sec-blurb"><strong>B-roll for "tired, behind, distracted, scrolling through someone else's life on a phone or a terminal window they can't put down."</strong> ~3 seconds total in the video → fast patchwork, but tasteful — no chaos.</p>
+  <h2 class="sec-title">Half 2, the used.</h2>
+  <p class="sec-blurb"><strong>B-roll for "tired, behind, distracted, scrolling through someone else's life on a phone or a terminal window they can't put down."</strong> Fast patchwork, tasteful, not chaotic.</p>
   <div style="background:#fff;border-radius:8px;padding:20px 24px;margin-bottom:24px;max-width:780px;font-size:13.5px;line-height:1.55;color:#1a1a1a">
     <div class="mono" style="color:#888;margin-bottom:10px">Editing direction for Webster</div>
-    <p style="margin-bottom:10px"><strong>Highlight ONE specific phrase per article</strong> — not the whole article. Examples: "today's teenagers are sleeping less than ever" · "birth rates falling everywhere all at once" · "Jury finds Meta and Google negligent" · "social media addiction lawsuit". Subtle yellow marker stripe or quick zoom. Half a second to one second, then cut.</p>
-    <p style="margin-bottom:10px"><strong>Stack the visuals:</strong> bed-scroll video plays in the background while article headlines fade in and out over it. Terminal cluster as a quick montage — five terminal screens in 1.5 seconds. Meta verdict image with the highlighted line stays on screen briefly, then cut.</p>
-    <p style="margin-bottom:0"><strong>See the "Algo" folder below</strong> for editing-style inspiration — Nour added 3 reference videos showing exactly the kind of patchwork-but-tasteful pacing this section should land at. Pull clips from them as b-roll too.</p>
+    <p style="margin-bottom:10px"><strong>Highlight one specific phrase per article</strong>, not the whole article. Examples: "today's teenagers are sleeping less than ever", "birth rates falling everywhere all at once", "Jury finds Meta and Google negligent", "social media addiction lawsuit". Yellow marker stripe on top of the line, or a fast zoom. Half a second to one second, then cut.</p>
+    <p style="margin-bottom:10px"><strong>Stack the visuals:</strong> bed-scroll video plays underneath while article headlines fade in and out over it. Terminal cluster as a quick montage, five terminal screens in 1.5 seconds. Meta verdict image with the highlighted line stays briefly, then cut.</p>
+    <p style="margin-bottom:0"><strong>Pacing inspiration:</strong> the Algo folder below has 3 reference videos Nour pulled showing the tone and patchwork rhythm this section should land at. Watch them first, pull clips from them as b-roll too.</p>
   </div>
   <div class="masonry">
 {used_html}
