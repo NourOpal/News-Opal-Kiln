@@ -748,7 +748,7 @@ const fallbackChain = (url) => [
 
 // Refs grid pre-rendered server-side; nothing to do here.
 
-(function () {
+window.addEventListener('DOMContentLoaded', function () {
   const cards = document.querySelectorAll('.card[data-url]');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
@@ -778,7 +778,7 @@ const fallbackChain = (url) => [
     });
   }, { rootMargin: '600px 0px' });
   cards.forEach((c) => obs.observe(c));
-})();
+});
 </script>
 
 
